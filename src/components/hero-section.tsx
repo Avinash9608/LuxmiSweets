@@ -337,20 +337,20 @@ export function HeroSection() {
                 }
                 
                 .swiper-pagination-bullet--svg-animation .svg__circle-inner {
-                    stroke: hsl(var(--foreground));
+                    stroke: hsl(var(--primary-foreground));
                     fill: transparent;
                     transition: all 0.3s ease;
                 }
 
                 .swiper-pagination-bullet-active .svg__circle {
-                    stroke: hsl(var(--primary));
+                    stroke: hsl(var(--accent));
                     stroke-dasharray: 75;
                     stroke-dashoffset: 0;
                     animation: progress 4s ease-in-out 1 forwards;
                 }
 
                 .swiper-pagination-bullet-active .svg__circle-inner {
-                    fill: hsl(var(--foreground));
+                    fill: hsl(var(--primary-foreground));
                     stroke: hsl(var(--primary));
                 }
 
