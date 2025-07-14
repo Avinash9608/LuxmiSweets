@@ -1,16 +1,22 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
+import dynamic from 'next/dynamic';
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Search, X, SlidersHorizontal } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const Slider = dynamic(() => import('@/components/ui/slider').then(mod => mod.Slider), {
+  ssr: false,
+  loading: () => <Skeleton className="h-2 w-full" />,
+});
 
 const allMenuItems = [
     // Cakes
@@ -61,6 +67,11 @@ export default function MenuPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [priceRange, setPriceRange] = useState([0, maxPrice]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(categories);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const filteredItems = useMemo(() => {
     return allMenuItems.filter((item) => {
@@ -134,13 +145,17 @@ export default function MenuPage() {
                 {/* Price Filter */}
                 <div className="space-y-4">
                   <h4 className="font-semibold">Price Range</h4>
-                  <Slider
-                      min={0}
-                      max={maxPrice}
-                      step={50}
-                      value={priceRange}
-                      onValueChange={(value) => setPriceRange(value)}
-                  />
+                  {isClient ? (
+                    <Slider
+                        min={0}
+                        max={maxPrice}
+                        step={50}
+                        value={priceRange}
+                        onValueChange={(value) => setPriceRange(value)}
+                    />
+                  ) : (
+                    <Skeleton className="h-5 w-full" />
+                  )}
                   <div className="flex justify-between text-sm text-muted-foreground">
                       <span>₹{priceRange[0]}</span>
                       <span>₹{priceRange[1]}</span>
