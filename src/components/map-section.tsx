@@ -14,7 +14,7 @@ export function MapSection() {
       <CardContent className="flex-grow flex flex-col gap-4">
         <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14436.311543839272!2d84.87321984428017!3d25.23412083556094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398dbe7f595a05b3%3A0x6854b6736da5421!2sLakhna%2C%20Bihar%20804453%2C%20India!5e0!3m2!1sen!2sus!4v1721021489069!5m2!1sen!2sus"
+            src="https://maps.google.com/maps?q=LuxmiSweets,Lakhna%20Bazar&t=&z=17&ie=UTF8&iwloc=&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0 }}
