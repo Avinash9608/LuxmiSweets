@@ -4,22 +4,20 @@ import bcrypt from 'bcryptjs';
 import { connectDB } from '@/lib/db';
 import User from '@/models/User';
 
-// For simplicity, we limit registration to these two emails.
-// In a real application, you might use an invite system or manual creation.
-const ADMIN_EMAILS = ['admin1@example.com', 'admin2@example.com'];
-
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
+
+    // Check the number of existing admin users
+    const adminCount = await User.countDocuments();
+    if (adminCount >= 2) {
+      return NextResponse.json({ message: 'Admin registration limit reached. No more admins can be created.' }, { status: 403 });
+    }
 
     const { email, password } = await req.json();
 
     if (!email || !password) {
       return NextResponse.json({ message: 'Email and password are required' }, { status: 400 });
-    }
-
-    if (!ADMIN_EMAILS.includes(email.toLowerCase())) {
-        return NextResponse.json({ message: 'This email is not authorized for admin registration.' }, { status: 403 });
     }
 
     const existingUser = await User.findOne({ email });
