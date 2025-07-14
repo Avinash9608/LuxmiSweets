@@ -27,6 +27,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      // No need to fetch user data on login/register pages
+      if (pathname.startsWith('/admin/login') || pathname.startsWith('/admin/register')) {
+        setLoading(false);
+        setUser(null);
+        return;
+      }
+      
       try {
         const response = await fetch('/api/auth/current');
         if (response.ok) {
@@ -34,6 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUser(data);
         } else {
           setUser(null);
+          // Only redirect if trying to access a protected dashboard route
           if (pathname.startsWith('/admin/dashboard')) {
             router.push('/admin/login');
           }
