@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
+import { AboutSection } from "@/components/about-section";
 import { MenuSection } from "@/components/menu-section";
 import { OrderForm } from "@/components/order-form";
 import { MapSection } from "@/components/map-section";
@@ -11,9 +12,10 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <HeroSection />
+        <AboutSection />
         <MenuSection />
         <section id="order" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
-          <div className="px-4 md:px-6">
+          <div className="w-full px-4 md:px-6">
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 Custom Orders
