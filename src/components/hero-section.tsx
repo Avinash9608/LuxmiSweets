@@ -180,7 +180,7 @@ export function HeroSection() {
 
                 .upk-salf-item .upk-salf-content-wrap {
                     position: absolute;
-                    left: 0;
+                    left: 5%;
                     bottom: 0;
                     top: unset;
                     max-width: 460px;
@@ -377,10 +377,10 @@ export function HeroSection() {
                     .upk-salf-item .upk-salf-content-wrap {
                         max-width: 400px;
                         padding: 40px;
-                        padding-left: 0;
                         top: 50%;
                         transform: translateY(-50%);
                         bottom: unset;
+                        left: 5%;
                     }
                     
                     .upk-salf-item .upk-salf-image-wrap {
@@ -404,7 +404,7 @@ export function HeroSection() {
                     .upk-salf-item .upk-salf-content-wrap {
                         max-width: 460px;
                         padding: 50px;
-                        padding-left: 50px;
+                        left: 5%;
                     }
                     
                     .upk-salf-item .upk-salf-desc {
