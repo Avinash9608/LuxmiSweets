@@ -9,59 +9,69 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Search, X, SlidersHorizontal, ListFilter, Tag, DollarSign, SortAsc } from "lucide-react";
+import { Search, X, SlidersHorizontal, ListFilter, Tag, DollarSign, SortAsc, ShoppingCart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { OrderItemDialog } from "@/components/order-item-dialog";
+import type { MenuItem } from "@/lib/types";
 
 const Slider = dynamic(() => import('@/components/ui/slider').then(mod => mod.Slider), {
   ssr: false,
   loading: () => <Skeleton className="h-2 w-full" />,
 });
 
-const allMenuItems = [
+const allMenuItems: MenuItem[] = [
     // Cakes
-    { name: "Chocolate Truffle Cake", category: "Cakes", price: 800, image: "https://placehold.co/300x200.png", hint: "chocolate cake", dietary: ['Eggless'] },
-    { name: "Red Velvet Cake", category: "Cakes", price: 950, image: "https://placehold.co/300x200.png", hint: "red velvet cake", dietary: ['Eggless'] },
-    { name: "Pineapple Paradise", category: "Cakes", price: 750, image: "https://placehold.co/300x200.png", hint: "pineapple cake", dietary: ['Eggless'] },
-    { name: "Classic Cheesecake", category: "Cakes", price: 1200, image: "https://placehold.co/300x200.png", hint: "cheesecake" },
-    { name: "Black Forest Gateau", category: "Cakes", price: 850, image: "https://placehold.co/300x200.png", hint: "black forest cake", dietary: ['Eggless'] },
-    { name: "Mango Mousse Cake", category: "Cakes", price: 1000, image: "https://placehold.co/300x200.png", hint: "mango cake", dietary: ['Eggless'] },
+    { name: "Chocolate Truffle Cake", category: "Cakes", price: 800, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "chocolate cake", dietary: ['Eggless'] },
+    { name: "Red Velvet Cake", category: "Cakes", price: 950, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "red velvet cake", dietary: ['Eggless'] },
+    { name: "Pineapple Paradise", category: "Cakes", price: 750, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "pineapple cake", dietary: ['Eggless'] },
+    { name: "Classic Cheesecake", category: "Cakes", price: 1200, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "cheesecake" },
+    { name: "Black Forest Gateau", category: "Cakes", price: 850, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "black forest cake", dietary: ['Eggless'] },
+    { name: "Mango Mousse Cake", category: "Cakes", price: 1000, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "mango cake", dietary: ['Eggless'] },
 
     // Sweets
-    { name: "Kaju Katli", category: "Sweets", price: 1100, image: "https://placehold.co/300x200.png", hint: "indian sweets", dietary: ['Vegan', 'Gluten-Free'] },
-    { name: "Motichoor Laddu", category: "Sweets", price: 600, image: "https://placehold.co/300x200.png", hint: "ladoo", dietary: [] },
-    { name: "Golden Jalebi", category: "Sweets", price: 550, image: "https://placehold.co/300x200.png", hint: "jalebi", dietary: ['Vegan'] },
-    { name: "Royal Gulab Jamun", category: "Sweets", price: 500, image: "https://placehold.co/300x200.png", hint: "gulab jamun", dietary: [] },
-    { name: "Rasmalai", category: "Sweets", price: 700, image: "https://placehold.co/300x200.png", hint: "rasmalai", dietary: ['Gluten-Free'] },
-    { name: "Pista Barfi", category: "Sweets", price: 1200, image: "https://placehold.co/300x200.png", hint: "pista barfi", dietary: ['Gluten-Free'] },
+    { name: "Kaju Katli", category: "Sweets", price: 1100, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "indian sweets", dietary: ['Vegan', 'Gluten-Free'] },
+    { name: "Motichoor Laddu", category: "Sweets", price: 600, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "ladoo", dietary: [] },
+    { name: "Golden Jalebi", category: "Sweets", price: 550, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "jalebi", dietary: ['Vegan'] },
+    { name: "Royal Gulab Jamun", category: "Sweets", price: 500, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "gulab jamun", dietary: [] },
+    { name: "Rasmalai", category: "Sweets", price: 700, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "rasmalai", dietary: ['Gluten-Free'] },
+    { name: "Pista Barfi", category: "Sweets", price: 1200, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "pista barfi", dietary: ['Gluten-Free'] },
 
     // Drinks
-    { name: "Mango Lassi", category: "Drinks", price: 150, image: "https://placehold.co/300x200.png", hint: "mango lassi", dietary: ['Gluten-Free'] },
-    { name: "Rose Sherbet", category: "Drinks", price: 120, image: "https://placehold.co/300x200.png", hint: "rose drink", dietary: ['Vegan', 'Gluten-Free'] },
-    { name: "Cold Coffee", category: "Drinks", price: 180, image: "https://placehold.co/300x200.png", hint: "cold coffee" },
-    { name: "Fresh Lime Soda", category: "Drinks", price: 100, image: "https://placehold.co/300x200.png", hint: "lime soda", dietary: ['Vegan', 'Gluten-Free'] },
-    { name: "Badam Milk", category: "Drinks", price: 160, image: "https://placehold.co/300x200.png", hint: "badam milk", dietary: ['Gluten-Free'] },
-    { name: "Thandai", category: "Drinks", price: 200, image: "https://placehold.co/300x200.png", hint: "thandai drink" },
+    { name: "Mango Lassi", category: "Drinks", price: 150, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "mango lassi", dietary: ['Gluten-Free'] },
+    { name: "Rose Sherbet", category: "Drinks", price: 120, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "rose drink", dietary: ['Vegan', 'Gluten-Free'] },
+    { name: "Cold Coffee", category: "Drinks", price: 180, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "cold coffee" },
+    { name: "Fresh Lime Soda", category: "Drinks", price: 100, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "lime soda", dietary: ['Vegan', 'Gluten-Free'] },
+    { name: "Badam Milk", category: "Drinks", price: 160, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "badam milk", dietary: ['Gluten-Free'] },
+    { name: "Thandai", category: "Drinks", price: 200, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "thandai drink" },
 ];
 
 const categories = ["Cakes", "Sweets", "Drinks"];
 const dietaryOptions = ["Eggless", "Vegan", "Gluten-Free"];
 const maxPrice = Math.max(...allMenuItems.map(item => item.price));
 
-const MenuItemCard = ({ name, price, image, hint }: { name: string; price: number; image: string; hint: string }) => (
-  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group border-transparent hover:border-primary">
+const MenuItemCard = ({ item }: { item: MenuItem }) => (
+  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl group border-transparent hover:border-primary flex flex-col">
     <CardHeader className="p-0">
       <div className="aspect-[3/2] relative overflow-hidden">
-        <Image src={image} alt={name} fill data-ai-hint={hint} className="object-cover transition-transform duration-500 group-hover:scale-110" />
+        <Image src={item.image} alt={item.name} fill data-ai-hint={item.hint} className="object-cover transition-transform duration-500 group-hover:scale-110" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
     </CardHeader>
-    <CardContent className="p-4 bg-card">
-      <CardTitle className="text-lg font-headline text-foreground leading-tight">{name}</CardTitle>
-      <p className="text-base text-primary dark:text-accent font-semibold mt-2">₹{price}</p>
+    <CardContent className="p-4 bg-card flex-grow flex flex-col">
+      <CardTitle className="text-lg font-headline text-foreground leading-tight">{item.name}</CardTitle>
+      <p className="text-base text-primary dark:text-accent font-semibold mt-2">₹{item.price} <span className="text-sm text-muted-foreground font-normal">{item.priceUnit}</span></p>
+      <div className="mt-auto pt-4">
+        <OrderItemDialog item={item}>
+          <Button variant="outline" className="w-full">
+            <ShoppingCart className="mr-2" />
+            Order Now
+          </Button>
+        </OrderItemDialog>
+      </div>
     </CardContent>
   </Card>
 );
@@ -288,7 +298,7 @@ export default function MenuPage() {
             {filteredItems.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
                   {filteredItems.map((item) => (
-                    <MenuItemCard key={item.name} {...item} />
+                    <MenuItemCard key={item.name} item={item} />
                   ))}
                 </div>
             ) : (
