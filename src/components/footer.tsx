@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="bg-primary text-primary-foreground py-8 px-4 md:px-6">
       <div className="flex flex-col md:flex-row items-center justify-between">
         <p className="text-sm">
-          © {new Date().getFullYear()} LuxmiSweet Delights. All rights reserved.
+          © {new Date().getFullYear()} LuxmiSweets. All rights reserved.
         </p>
         <div className="flex items-center gap-4 mt-4 md:mt-0">
           <Link href="#" className="hover:opacity-80 transition-opacity" aria-label="Twitter">

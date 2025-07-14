@@ -16,7 +16,7 @@ export function MapSection() {
         <div className="relative aspect-video w-full rounded-lg overflow-hidden">
           <Image
             src="https://placehold.co/600x400.png"
-            alt="Map to LuxmiSweet Delights"
+            alt="Map to LuxmiSweets"
             layout="fill"
             objectFit="cover"
             data-ai-hint="map abstract"
@@ -24,7 +24,7 @@ export function MapSection() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           <div className="absolute bottom-4 left-4">
-            <h3 className="text-white font-bold text-lg">LuxmiSweet Delights</h3>
+            <h3 className="text-white font-bold text-lg">LuxmiSweets</h3>
             <p className="text-white/90 text-sm">123 Sweet Lane, Flavor Town</p>
           </div>
         </div>

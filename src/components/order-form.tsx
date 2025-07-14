@@ -82,7 +82,7 @@ ${fileName ? `Reference image attached: ${fileName}` : ''}
 
   const handleEmailOrder = (data: FormData) => {
     const message = generateMessage(data);
-    const subject = "New Custom Order from LuxmiSweet Delights";
+    const subject = "New Custom Order from LuxmiSweets";
     const mailtoUrl = `mailto:orders@luxmisweet.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
     window.open(mailtoUrl, "_blank");
      toast({
