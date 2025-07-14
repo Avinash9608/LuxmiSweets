@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { Icons } from './icons';
@@ -5,7 +6,7 @@ import { Icons } from './icons';
 export function AboutSection() {
   return (
     <>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
+      <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-foreground">
@@ -46,9 +47,9 @@ export function AboutSection() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative aspect-square">
               <Image 
                 src="https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -58,7 +59,7 @@ export function AboutSection() {
                 className="rounded-lg shadow-lg object-cover"
               />
             </div>
-            <div className="space-y-6">
+            <div className="space-y-6 text-center lg:text-left">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl font-headline">
                 Breakfast Croissants and Sandwiches
               </h2>

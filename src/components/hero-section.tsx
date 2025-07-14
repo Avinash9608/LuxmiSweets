@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect } from 'react';
@@ -89,7 +90,7 @@ export function HeroSection() {
                                   style={{ objectFit: 'cover' }}
                                   priority={slide.id === 1}
                                 />
-                                 <div className="absolute inset-0 bg-black/30"></div>
+                                 <div className="absolute inset-0 bg-black/40"></div>
                             </div>
                             <div className="upk-salf-content-wrap">
                                 <h3 className="upk-salf-title" data-swiper-parallax-y="-150" data-swiper-parallax-duration="1200">
@@ -156,7 +157,8 @@ export function HeroSection() {
                 .upk-salf-item {
                     position: relative;
                     display: flex;
-                    flex-direction: row-reverse;
+                    justify-content: center;
+                    align-items: center;
                 }
 
                 .upk-salf-item.swiper-slide-active .upk-salf-title,
@@ -180,23 +182,22 @@ export function HeroSection() {
                 }
 
                 .upk-salf-item .upk-salf-content-wrap {
-                    position: absolute;
-                    left: 5%;
-                    bottom: 0;
-                    top: unset;
-                    max-width: 460px;
+                    position: relative;
+                    max-width: 90%;
+                    width: 500px;
+                    text-align: center;
                     overflow: hidden;
                     background: hsla(var(--background) / 0.5);
                     backdrop-filter: blur(15px);
                     -webkit-backdrop-filter: blur(15px);
                     transition: backdrop-filter 0.9s;
-                    padding: 20px;
-                    padding-left: 20px;
+                    padding: 2.5rem 2rem;
                     color: hsl(var(--foreground));
+                    border-radius: 0.5rem;
                 }
 
                 .upk-salf-item .upk-salf-title {
-                    font-size: 23px;
+                    font-size: 2rem;
                     font-weight: 700;
                     line-height: 1.2;
                     text-transform: capitalize;
@@ -206,7 +207,7 @@ export function HeroSection() {
                 }
 
                 .upk-salf-item .upk-salf-desc {
-                    font-size: 14px;
+                    font-size: 1rem;
                     line-height: 1.6;
                     text-transform: capitalize;
                     margin-bottom: 20px;
@@ -372,22 +373,20 @@ export function HeroSection() {
                 
                 @media (min-width: 768px) {
                     .upk-salf-item .upk-salf-title {
-                        font-size: 40px;
+                        font-size: 3rem;
+                    }
+                    
+                    .upk-salf-item {
+                        justify-content: flex-start;
                     }
 
                     .upk-salf-item .upk-salf-content-wrap {
-                        max-width: 400px;
+                        max-width: 450px;
                         padding: 40px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        bottom: unset;
                         left: 5%;
+                        text-align: left;
                     }
                     
-                    .upk-salf-item .upk-salf-image-wrap {
-                        width: 80%;
-                    }
-
                     .upk-salf-navigation {
                         right: 40px;
                     }
@@ -399,27 +398,23 @@ export function HeroSection() {
 
                 @media (min-width: 1024px) {
                     .upk-salf-item .upk-salf-title {
-                        font-size: 50px;
+                        font-size: 3.5rem;
                     }
                     
                     .upk-salf-item .upk-salf-content-wrap {
-                        max-width: 460px;
+                        max-width: 500px;
                         padding: 50px;
-                        left: 5%;
+                        left: 10%;
                     }
                     
                     .upk-salf-item .upk-salf-desc {
-                        font-size: 16px;
+                        font-size: 1.125rem;
                     }
                     
                     .upk-salf-item .upk-salf-button .link {
-                        font-size: 16px;
+                        font-size: 1rem;
                     }
-                    
-                    .upk-salf-item .upk-salf-image-wrap {
-                        width: 70%;
-                    }
-
+                                        
                     .upk-salf-navigation {
                         right: 50px;
                     }

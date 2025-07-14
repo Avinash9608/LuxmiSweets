@@ -1,3 +1,4 @@
+
 import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
@@ -29,7 +30,7 @@ export default function Home() {
                 Have a special occasion? Let us craft the perfect sweet creation for you.
               </p>
             </div>
-            <div className="mt-12 grid gap-12 lg:grid-cols-5 lg:gap-16">
+            <div className="mt-12 grid gap-12 lg:grid-cols-5 lg:gap-16 items-start">
               <div className="lg:col-span-3">
                 <OrderForm />
               </div>
