@@ -9,7 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Search, X } from "lucide-react";
+import { Search, X, SlidersHorizontal } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const allMenuItems = [
     // Cakes
@@ -88,85 +89,90 @@ export default function MenuPage() {
     <div className="flex min-h-screen flex-col bg-secondary/30">
       <Header />
       <main className="flex-1 container mx-auto py-8 px-4 md:px-6">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tighter font-headline text-foreground">Our Full Menu</h1>
             <p className="max-w-2xl mx-auto mt-4 text-muted-foreground md:text-lg">
                 Explore our entire collection of exquisite sweets, cakes, and drinks. Use the filters to find your perfect treat.
             </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
-          <aside className="lg:col-span-1 bg-background p-6 rounded-lg shadow-lg h-fit sticky top-24">
-            <h3 className="text-xl font-headline font-semibold mb-6">Filter Options</h3>
-            
+        {/* Filters Bar */}
+        <Card className="p-4 md:p-6 mb-8 shadow-md">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 items-center">
             {/* Search Filter */}
-            <div className="relative mb-6">
+            <div className="relative lg:col-span-1">
               <Input
                 placeholder="Search for an item..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-12 text-base"
               />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             </div>
 
             {/* Category Filter */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-3">Categories</h4>
-              <div className="space-y-2">
-                {categories.map((category) => (
-                  <div key={category} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={category}
-                      checked={selectedCategories.includes(category)}
-                      onCheckedChange={() => handleCategoryChange(category)}
-                    />
-                    <label htmlFor={category} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                      {category}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Filter */}
-            <div className="mb-8">
-              <h4 className="font-semibold mb-3">Price Range</h4>
-              <Slider
-                min={0}
-                max={maxPrice}
-                step={50}
-                value={priceRange}
-                onValueChange={(value) => setPriceRange(value)}
-              />
-              <div className="flex justify-between text-sm text-muted-foreground mt-2">
-                <span>₹{priceRange[0]}</span>
-                <span>₹{priceRange[1]}</span>
-              </div>
-            </div>
-
-            <Button onClick={resetFilters} variant="outline" className="w-full">
-                <X className="mr-2 h-4 w-4" /> Reset Filters
-            </Button>
-          </aside>
-
-          {/* Menu Grid */}
-          <div className="lg:col-span-3">
-             {filteredItems.length > 0 ? (
-                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
-                    {filteredItems.map((item) => (
-                      <MenuItemCard key={item.name} {...item} />
-                    ))}
-                  </div>
-             ) : (
-                <div className="flex flex-col items-center justify-center text-center h-full bg-background rounded-lg p-12">
-                    <Search className="h-16 w-16 text-muted-foreground/50 mb-4" />
-                    <h3 className="text-2xl font-headline font-semibold">No Matches Found</h3>
-                    <p className="text-muted-foreground mt-2">Try adjusting your filters to find what you're looking for.</p>
+            <div className="md:col-span-2 lg:col-span-2">
+              <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
+                <div className="flex items-center font-semibold text-sm whitespace-nowrap">
+                  <SlidersHorizontal className="w-4 h-4 mr-2"/>
+                  Categories
                 </div>
-             )}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  {categories.map((category) => (
+                    <div key={category} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={category}
+                        checked={selectedCategories.includes(category)}
+                        onCheckedChange={() => handleCategoryChange(category)}
+                      />
+                      <label htmlFor={category} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        {category}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Price Filter & Reset */}
+            <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                    <h4 className="font-semibold text-sm">Price Range</h4>
+                    <Button onClick={resetFilters} variant="ghost" size="sm" className="h-auto px-2 py-1 text-xs">
+                        <X className="mr-1 h-3 w-3" /> Reset
+                    </Button>
+                </div>
+                <Slider
+                    min={0}
+                    max={maxPrice}
+                    step={50}
+                    value={priceRange}
+                    onValueChange={(value) => setPriceRange(value)}
+                />
+                <div className="flex justify-between text-sm text-muted-foreground -mt-2">
+                    <span>₹{priceRange[0]}</span>
+                    <span>₹{priceRange[1]}</span>
+                </div>
+            </div>
+
           </div>
+        </Card>
+
+        {/* Menu Grid */}
+        <div className="lg:col-span-3 mt-8">
+            {filteredItems.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                  {filteredItems.map((item) => (
+                    <MenuItemCard key={item.name} {...item} />
+                  ))}
+                </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center text-center h-full bg-background rounded-lg p-12 mt-12">
+                  <Search className="h-16 w-16 text-muted-foreground/50 mb-4" />
+                  <h3 className="text-2xl font-headline font-semibold">No Matches Found</h3>
+                  <p className="text-muted-foreground mt-2">Try adjusting your filters to find what you're looking for.</p>
+              </div>
+            )}
         </div>
       </main>
       <Footer />
