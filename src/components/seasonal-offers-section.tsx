@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -14,28 +15,28 @@ const offers = [
     emoji: "🪔",
     title: "Diwali Combo Offer",
     description: "Light up your celebrations! Get 2kg of assorted sweets + a 1lb cake for only ₹999!",
-    pattern: "bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-100 via-orange-50 to-transparent",
+    pattern: "bg-secondary/50",
     buttonText: "Claim Diwali Offer"
   },
   {
     emoji: "🎉",
     title: "Raksha Bandhan Special",
     description: "Sweeten the bond of love with 10% off on all Kaju Katli & premium gift boxes.",
-     pattern: "bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-rose-100 via-pink-50 to-transparent",
+     pattern: "bg-secondary/50",
      buttonText: "Shop Rakhi Gifts"
   },
   {
     emoji: "🎂",
     title: "Birthday Month Treat",
     description: "Celebrating a birthday? Get a FREE 250g premium sweet box with any custom cake order!",
-     pattern: "bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-sky-100 via-blue-50 to-transparent",
+     pattern: "bg-secondary/50",
      buttonText: "Order Birthday Cake"
   },
   {
     emoji: "🎊",
     title: "Holi Splash of Sweetness",
     description: "Add color to your festivities with our special Gujiya and Thandai packs. Starting at just ₹250!",
-     pattern: "bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-violet-100 via-purple-50 to-transparent",
+     pattern: "bg-secondary/50",
      buttonText: "Explore Holi Specials"
   },
 ];
@@ -46,7 +47,7 @@ export function SeasonalOffersSection() {
   );
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <Carousel
           plugins={[plugin.current]}
