@@ -113,6 +113,7 @@ const generateQuickOrderHtmlMessage = (data: QuickOrderData) => {
 
 export async function sendOrderEmail(data: FormData) {
   if (!checkEmailConfig()) {
+    console.error("Email service not configured. Missing environment variables.");
     return { success: false, message: "Email service is not configured on the server." };
   }
 
@@ -152,6 +153,7 @@ export async function sendOrderEmail(data: FormData) {
 
 export async function sendQuickOrderEmail(data: QuickOrderData) {
   if (!checkEmailConfig()) {
+    console.error("Email service not configured. Missing environment variables.");
     return { success: false, message: "Email service is not configured on the server." };
   }
   
@@ -183,7 +185,7 @@ export async function sendQuickOrderEmail(data: QuickOrderData) {
     await transporter.sendMail(mailOptions);
     return { success: true, message: "Quick order email sent successfully!" };
   } catch (error) {
-    console.error("Failed to send quick order email:", error);
+    console.error("Nodemailer failed to send quick order email:", error);
     return { success: false, message: "Failed to send quick order email. Please try again." };
   }
 }
