@@ -38,7 +38,7 @@ const MenuItemCard = ({ name, price, image, hint }: { name: string; price: strin
     </CardHeader>
     <CardContent className="p-4 bg-card">
       <CardTitle className="text-lg font-headline text-foreground">{name}</CardTitle>
-      <CardDescription className="text-base text-accent font-semibold mt-1">{price}</CardDescription>
+      <CardDescription className="text-base text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent font-semibold mt-1">{price}</CardDescription>
     </CardContent>
   </Card>
 );
@@ -49,14 +49,14 @@ export function MenuSection() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-primary">Our Menu</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Our Menu</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Discover our delightful range of handcrafted treats, made with the finest ingredients and a touch of love.
             </p>
           </div>
         </div>
         <Tabs defaultValue="cakes" className="w-full max-w-5xl mx-auto mt-12">
-          <TabsList className="grid w-full grid-cols-3 bg-secondary/50">
+          <TabsList className="grid w-full grid-cols-3 bg-muted">
             <TabsTrigger value="cakes">Cakes</TabsTrigger>
             <TabsTrigger value="sweets">Sweets</TabsTrigger>
             <TabsTrigger value="drinks">Cold Drinks</TabsTrigger>
