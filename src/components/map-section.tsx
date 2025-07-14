@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export function MapSection() {
   return (
-    <Card className="h-full flex flex-col">
+    <Card id="location" className="h-full flex flex-col scroll-mt-20">
       <CardHeader>
         <CardTitle className="font-headline flex items-center gap-2">
           <MapPin className="h-6 w-6 text-primary" />

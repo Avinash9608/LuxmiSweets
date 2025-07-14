@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Card, CardContent } from './ui/card';
 import { Clock, IndianRupee } from 'lucide-react';
+import Link from 'next/link';
 
 const breakfastItems = [
     {
@@ -129,10 +130,10 @@ export function AboutSection() {
                                     </Card>
                                 ))}
                             </div>
-                             <div className="mt-12 text-center bg-card p-6 rounded-lg border border-dashed border-primary/50">
+                             <Link href="/#location" className="block mt-12 text-center bg-card p-6 rounded-lg border border-dashed border-primary/50 transition-colors hover:border-primary hover:bg-secondary">
                                 <h4 className="text-xl font-bold font-headline">खाने के लिए हमारे दुकान पर आएं</h4>
                                 <p className="text-muted-foreground mt-2">Visit our shop to enjoy these delicious, freshly made snacks!</p>
-                            </div>
+                            </Link>
                         </CollapsibleContent>
                     </Collapsible>
                 </div>
