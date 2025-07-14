@@ -10,23 +10,14 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-        <path
-            d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"
-            className="text-primary/70"
-            fill="currentColor"
-            stroke="currentColor"
-            strokeWidth="1"
-        />
-        <path
-            d="M4 16c-1.1 0-2 .9-2 2v3h20v-3c0-1.1-.9-2-2-2H4Z"
-            className="text-primary"
-            fill="currentColor"
-        />
-        <path
-            d="M12 4c-1.1 0-2 .9-2 2v2a2 2 0 1 0 4 0V6c0-1.1-.9-2-2-2Z"
-            className="text-accent"
-            fill="currentColor"
-        />
+      <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 19H16" className="text-primary/70" />
+        <path d="M12 16V19" className="text-primary/70" />
+        <path d="M5 16H19" className="text-primary" />
+        <path d="M6 12C6 10.8954 6.89543 10 8 10H16C17.1046 10 18 10.8954 18 12V16H6V12Z" className="text-primary" fill="hsl(var(--card))" />
+        <path d="M7 6C7 4.89543 7.89543 4 9 4H15C16.1046 4 17 4.89543 17 6V10H7V6Z" className="text-primary/80" fill="hsl(var(--card))"/>
+        <path d="M12 2V4" className="text-accent"/>
+      </g>
     </svg>
   );
 }
