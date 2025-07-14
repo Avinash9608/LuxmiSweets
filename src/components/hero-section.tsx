@@ -7,7 +7,7 @@ export function HeroSection() {
   return (
     <section className="relative w-full h-[85vh] min-h-[700px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0 bg-background">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/10"></div>
       </div>
       
       <div className="absolute inset-0 z-0 opacity-20 dark:opacity-10">
@@ -21,7 +21,7 @@ export function HeroSection() {
 
       <div className="container px-4 md:px-6 text-center z-20">
         <div className="max-w-4xl mx-auto">
-          <h1 className="font-headline text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-br from-primary to-[#FFD1FF] dark:from-accent dark:to-primary drop-shadow-lg">
+          <h1 className="font-headline text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl text-foreground drop-shadow-lg">
             Indulge in Divine Flavors
           </h1>
           <p className="mt-6 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
