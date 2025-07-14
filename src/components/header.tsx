@@ -16,6 +16,7 @@ export function Header() {
         
         <nav className="flex justify-center items-center space-x-6">
           <Link href="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Home</Link>
+          <Link href="/menu" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Menu</Link>
           <Link href="#order" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Order</Link>
         </nav>
 
