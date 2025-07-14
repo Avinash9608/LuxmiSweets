@@ -46,12 +46,14 @@ const sliderData = [
 
 export function HeroSection() {
     useEffect(() => {
+        const isMobile = window.innerWidth < 768;
+
         const mainSlider = new Swiper(".mySwiper2", {
             modules: [Parallax, Navigation, Pagination, Autoplay],
             parallax: true,
             speed: 1200,
             effect: 'slide',
-            direction: "vertical",
+            direction: isMobile ? "horizontal" : "vertical",
             autoplay: {
                 delay: 4000,
                 disableOnInteraction: false,
@@ -395,6 +397,47 @@ export function HeroSection() {
                        right: 17px;
                     }
                 }
+
+                /* Mobile-specific adjustments */
+                @media (max-width: 767px) {
+                    .upk-salf-navigation {
+                        flex-direction: row;
+                        top: auto;
+                        bottom: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        right: auto;
+                        width: 100px;
+                        justify-content: space-between;
+                    }
+                    .upk-salf-navigation .upk-button-next,
+                    .upk-salf-navigation .upk-button-prev {
+                        transform: rotate(0);
+                    }
+                    .upk-salf-navigation .upk-button-prev {
+                        transform: rotate(180deg);
+                    }
+                    .upk-salf-pagi-wrap {
+                        flex-direction: row;
+                        top: auto;
+                        bottom: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: auto;
+                        right: auto;
+                    }
+                     .swiper-pagination-bullet--svg-animation {
+                        margin: 0 6px;
+                    }
+                    .upk-salf-nav-pag-wrap {
+                        height: auto;
+                        bottom: 0;
+                        top: auto;
+                        right: auto;
+                        width: 100%;
+                    }
+                }
+
 
                 @media (min-width: 1024px) {
                     .upk-salf-item .upk-salf-title {
