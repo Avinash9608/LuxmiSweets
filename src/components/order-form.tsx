@@ -4,7 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, Upload, MessageCircle, Mail } from "lucide-react";
+import { Calendar as CalendarIcon, Upload, MessageCircle, Mail, Loader2 } from "lucide-react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import React from "react";
+import { sendOrderEmail } from "@/app/actions";
+
 
 const formSchema = z.object({
   category: z.string({ required_error: "Please select a category." }),
@@ -48,9 +50,13 @@ export function OrderForm() {
   const { toast } = useToast();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      notes: "",
+    }
   });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,35 +66,52 @@ export function OrderForm() {
     }
   };
   
-  const generateMessage = (data: FormData) => {
-    return `
-New Custom Order:
+  const generateWhatsAppMessage = (data: FormData) => {
+    return `Hello LuxmiSweets, I want to order:
 Category: ${data.category}
 Pickup Time: ${format(data.pickupTime, "PPP")}
 Notes: ${data.notes || "No notes provided."}
-${fileName ? `Reference image attached: ${fileName}` : ''}
-    `.trim();
+${fileName ? `Reference image attached: ${fileName}` : ''}`.trim();
   };
 
   const handleWhatsAppOrder = (data: FormData) => {
-    const message = generateMessage(data);
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    const message = generateWhatsAppMessage(data);
+    const whatsappUrl = `https://wa.me/919123456789?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
     toast({
-      title: "Redirecting to WhatsApp",
-      description: "Please send the pre-filled message to place your order.",
+      title: "Action Required",
+      description: "Please send the pre-filled message in WhatsApp to place your order.",
     });
   };
 
-  const handleEmailOrder = (data: FormData) => {
-    const message = generateMessage(data);
-    const subject = "New Custom Order from LuxmiSweets";
-    const mailtoUrl = `mailto:orders@luxmisweet.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-    window.open(mailtoUrl, "_blank");
-     toast({
-      title: "Opening Email Client",
-      description: "Please send the pre-filled email to place your order.",
-    });
+  const handleEmailOrder = async (data: FormData) => {
+    setIsSubmitting(true);
+    const emailData = {
+      ...data,
+      pickupTime: format(data.pickupTime, "PPP"),
+      fileName: fileName || undefined,
+    };
+
+    const result = await sendOrderEmail(emailData);
+
+    if (result.success) {
+      toast({
+        title: "Order Request Sent!",
+        description: "Thank you! Our team will confirm your order via email shortly.",
+      });
+      form.reset();
+      setFileName(null);
+      if(fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Oh no! Something went wrong.",
+        description: result.message,
+      });
+    }
+    setIsSubmitting(false);
   };
 
   return (
@@ -145,7 +168,7 @@ ${fileName ? `Reference image attached: ${fileName}` : ''}
               name="pickupTime"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Delivery/Pickup Time</FormLabel>
+                  <FormLabel>Delivery/Pickup Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -183,9 +206,9 @@ ${fileName ? `Reference image attached: ${fileName}` : ''}
             />
             
             <FormItem>
-              <FormLabel>Reference Image</FormLabel>
+              <FormLabel>Reference Image (Optional)</FormLabel>
               <FormControl>
-                 <Button variant="outline" className="w-full justify-start" onClick={() => fileInputRef.current?.click()}>
+                 <Button variant="outline" type="button" className="w-full justify-start font-normal" onClick={() => fileInputRef.current?.click()}>
                     <Upload className="mr-2 h-4 w-4" />
                     {fileName || "Upload an image"}
                  </Button>
@@ -201,11 +224,16 @@ ${fileName ? `Reference image attached: ${fileName}` : ''}
             </FormItem>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-              <Button type="button" onClick={form.handleSubmit(handleWhatsAppOrder)} className="w-full">
+              <Button type="button" onClick={form.handleSubmit(handleWhatsAppOrder)} className="w-full" variant="secondary">
                 <MessageCircle className="mr-2 h-4 w-4" /> Order on WhatsApp
               </Button>
-              <Button type="button" onClick={form.handleSubmit(handleEmailOrder)} className="w-full">
-                 <Mail className="mr-2 h-4 w-4" /> Order via Email
+              <Button type="submit" onClick={form.handleSubmit(handleEmailOrder)} disabled={isSubmitting} className="w-full">
+                 {isSubmitting ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                 ) : (
+                    <Mail className="mr-2 h-4 w-4" />
+                 )}
+                 Order via Email
               </Button>
             </div>
           </form>
