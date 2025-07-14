@@ -5,7 +5,10 @@ import { Icons } from "@/components/icons";
 
 export function HeroSection() {
   return (
-    <section className="relative w-full h-[85vh] min-h-[700px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/10 via-background to-accent/10 dark:from-primary/20 dark:to-accent/20">
+    <section className="relative w-full h-[85vh] min-h-[700px] flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0 bg-background">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
+      </div>
       
       <div className="absolute inset-0 z-0 opacity-20 dark:opacity-10">
           <Icons.cake className="absolute top-[10%] left-[5%] h-24 w-24 text-primary animate-float" style={{ animationDuration: '15s' }} />
