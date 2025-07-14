@@ -35,7 +35,7 @@ const sliderData = [
     },
     {
         id: 4,
-        image: "https://placehold.co/1200x800.png",
+        image: "https://plus.unsplash.com/premium_photo-1716309257210-e23cd3c7de19?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjM3fHxjYWtlfGVufDB8fDB8fHww",
         hint: "custom order cake",
         title: "Custom Creations for You",
         description: "Have a special event? Let us craft a custom cake or sweet assortment that will delight your guests.",
