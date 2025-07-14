@@ -30,14 +30,14 @@ const menuItems = {
 };
 
 const MenuItemCard = ({ name, price, image, hint }: { name: string; price: string; image: string; hint: string }) => (
-  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105">
+  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
     <CardHeader className="p-0">
-      <div className="aspect-[4/3] relative">
-        <Image src={image} alt={name} layout="fill" objectFit="cover" data-ai-hint={hint} />
+      <div className="aspect-[4/3] relative overflow-hidden">
+        <Image src={image} alt={name} layout="fill" objectFit="cover" data-ai-hint={hint} className="transition-transform duration-500 group-hover:scale-110" />
       </div>
     </CardHeader>
-    <CardContent className="p-4">
-      <CardTitle className="text-lg font-headline">{name}</CardTitle>
+    <CardContent className="p-4 bg-card">
+      <CardTitle className="text-lg font-headline text-foreground">{name}</CardTitle>
       <CardDescription className="text-base text-accent font-semibold mt-1">{price}</CardDescription>
     </CardContent>
   </Card>
@@ -45,7 +45,7 @@ const MenuItemCard = ({ name, price, image, hint }: { name: string; price: strin
 
 export function MenuSection() {
   return (
-    <section id="menu" className="w-full py-12 md:py-24 lg:py-32">
+    <section id="menu" className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
@@ -55,24 +55,24 @@ export function MenuSection() {
             </p>
           </div>
         </div>
-        <Tabs defaultValue="cakes" className="w-full max-w-4xl mx-auto mt-12">
-          <TabsList className="grid w-full grid-cols-3">
+        <Tabs defaultValue="cakes" className="w-full max-w-5xl mx-auto mt-12">
+          <TabsList className="grid w-full grid-cols-3 bg-secondary/50">
             <TabsTrigger value="cakes">Cakes</TabsTrigger>
             <TabsTrigger value="sweets">Sweets</TabsTrigger>
             <TabsTrigger value="drinks">Cold Drinks</TabsTrigger>
           </TabsList>
           <TabsContent value="cakes">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
               {menuItems.cakes.map((item) => <MenuItemCard key={item.name} {...item} />)}
             </div>
           </TabsContent>
           <TabsContent value="sweets">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
               {menuItems.sweets.map((item) => <MenuItemCard key={item.name} {...item} />)}
             </div>
           </TabsContent>
           <TabsContent value="drinks">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
               {menuItems.drinks.map((item) => <MenuItemCard key={item.name} {...item} />)}
             </div>
           </TabsContent>
