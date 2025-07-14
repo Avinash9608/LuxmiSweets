@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "./ui/button";
 
 const menuItems = {
@@ -30,19 +29,25 @@ const menuItems = {
   ],
 };
 
+const featuredItems = [
+    ...menuItems.cakes.slice(0, 2),
+    ...menuItems.sweets.slice(0, 1),
+    ...menuItems.drinks.slice(0, 1)
+];
+
 const MenuItemCard = ({ name, price, image, hint }: { name: string; price: string; image: string; hint: string }) => (
-  <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group border-transparent hover:border-primary">
-    <CardHeader className="p-0">
-      <div className="aspect-[3/2] relative overflow-hidden">
-        <Image src={image} alt={name} fill data-ai-hint={hint} className="object-cover transition-transform duration-500 group-hover:scale-110" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </div>
-    </CardHeader>
-    <CardContent className="p-4 bg-card">
-      <CardTitle className="text-lg font-headline text-foreground leading-tight">{name}</CardTitle>
-      <p className="text-base text-primary dark:text-accent font-semibold mt-2">{price}</p>
-    </CardContent>
-  </Card>
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group border-transparent hover:border-primary">
+      <CardHeader className="p-0">
+        <div className="aspect-[3/2] relative overflow-hidden">
+          <Image src={image} alt={name} fill data-ai-hint={hint} className="object-cover transition-transform duration-500 group-hover:scale-110" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+      </CardHeader>
+      <CardContent className="p-4 bg-card">
+        <CardTitle className="text-lg font-headline text-foreground leading-tight">{name}</CardTitle>
+        <p className="text-base text-primary dark:text-accent font-semibold mt-2">{price}</p>
+      </CardContent>
+    </Card>
 );
 
 export function MenuSection({ showExploreMoreButton = true }: { showExploreMoreButton?: boolean }) {
@@ -51,34 +56,17 @@ export function MenuSection({ showExploreMoreButton = true }: { showExploreMoreB
       <div className="w-full px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-foreground">Our Menu</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-foreground">Our Featured Items</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Discover our delightful range of handcrafted treats, made with the finest ingredients and a touch of love.
             </p>
           </div>
         </div>
-        <Tabs defaultValue="cakes" className="w-full max-w-6xl mx-auto mt-12">
-          <TabsList className="grid w-full grid-cols-3 bg-secondary/80">
-            <TabsTrigger value="cakes">Cakes</TabsTrigger>
-            <TabsTrigger value="sweets">Sweets</TabsTrigger>
-            <TabsTrigger value="drinks">Cold Drinks</TabsTrigger>
-          </TabsList>
-          <TabsContent value="cakes">
+        <div className="w-full max-w-6xl mx-auto mt-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mt-8">
-              {menuItems.cakes.map((item) => <MenuItemCard key={item.name} {...item} />)}
+              {featuredItems.map((item) => <MenuItemCard key={item.name} {...item} />)}
             </div>
-          </TabsContent>
-          <TabsContent value="sweets">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mt-8">
-              {menuItems.sweets.map((item) => <MenuItemCard key={item.name} {...item} />)}
-            </div>
-          </TabsContent>
-          <TabsContent value="drinks">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mt-8">
-              {menuItems.drinks.map((item) => <MenuItemCard key={item.name} {...item} />)}
-            </div>
-          </TabsContent>
-        </Tabs>
+        </div>
 
         {showExploreMoreButton && (
           <div className="mt-12 text-center">
