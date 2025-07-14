@@ -33,7 +33,7 @@ const MenuItemCard = ({ name, price, image, hint }: { name: string; price: strin
   <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group border-transparent hover:border-primary">
     <CardHeader className="p-0">
       <div className="aspect-[3/2] relative overflow-hidden">
-        <Image src={image} alt={name} layout="fill" objectFit="cover" data-ai-hint={hint} className="transition-transform duration-500 group-hover:scale-110" />
+        <Image src={image} alt={name} fill data-ai-hint={hint} className="object-cover transition-transform duration-500 group-hover:scale-110" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
     </CardHeader>
@@ -47,7 +47,7 @@ const MenuItemCard = ({ name, price, image, hint }: { name: string; price: strin
 export function MenuSection() {
   return (
     <section id="menu" className="w-full py-12 md:py-24 lg:py-32 bg-background">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="w-full px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-foreground">Our Menu</h2>

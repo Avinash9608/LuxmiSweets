@@ -17,10 +17,9 @@ export function MapSection() {
           <Image
             src="https://placehold.co/600x400.png"
             alt="Map to LuxmiSweets"
-            layout="fill"
-            objectFit="cover"
+            fill
             data-ai-hint="map abstract"
-            className="opacity-70"
+            className="object-cover opacity-70"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           <div className="absolute bottom-4 left-4">
