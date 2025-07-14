@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Roboto', 'sans-serif'],
-        headline: ['Playfair Display', 'serif'],
+        body: ['"EB Garamond"', 'serif'],
+        headline: ['"EB Garamond"', 'serif'],
         code: ['monospace'],
       },
       colors: {
