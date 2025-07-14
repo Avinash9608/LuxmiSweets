@@ -4,6 +4,8 @@ import { AboutSection } from "@/components/about-section";
 import { MenuSection } from "@/components/menu-section";
 import { OrderForm } from "@/components/order-form";
 import { MapSection } from "@/components/map-section";
+import { TestimonialSection } from "@/components/testimonial-section";
+import { FaqSection } from "@/components/faq-section";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
@@ -34,6 +36,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <TestimonialSection />
+        <FaqSection />
       </main>
       <Footer />
     </div>
