@@ -56,7 +56,7 @@ export function TrustSection() {
   };
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-background relative overflow-hidden">
+    <section id="trust" className="w-full py-12 md:py-24 lg:py-32 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(to_bottom,white,transparent)] dark:bg-grid-slate-700/40"></div>
       <div className="container mx-auto px-4 md:px-6 relative">
         <div className="mx-auto max-w-4xl text-center">

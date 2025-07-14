@@ -12,19 +12,23 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/menu", label: "Menu" },
+    { href: "/#about", label: "About" },
+    { href: "/#trust", label: "Trust" },
+    { href: "/#team", label: "Team" },
+    { href: "/#faq", label: "FAQ" },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center">
-        <div className="flex items-center">
+        <div className="flex items-center md:flex-1">
           <Link href="/" className="flex items-center space-x-2">
             <Logo />
             <span className="font-bold font-headline text-lg text-primary">LuxmiSweets</span>
           </Link>
         </div>
 
-        <nav className="hidden md:flex flex-1 items-center justify-center space-x-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center justify-center space-x-6 text-sm font-medium">
           {navLinks.map(link => (
             <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground/80 text-foreground/60">
               {link.label}
@@ -32,7 +36,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center justify-end space-x-2 md:w-[188px]">
+        <div className="flex flex-1 items-center justify-end space-x-2">
            <Button asChild className="hidden md:inline-flex">
             <a href="/#order">Order Now</a>
           </Button>
