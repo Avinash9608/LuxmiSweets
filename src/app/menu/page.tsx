@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Search, X, SlidersHorizontal } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const Slider = dynamic(() => import('@/components/ui/slider').then(mod => mod.Slider), {
   ssr: false,
@@ -96,13 +97,58 @@ export default function MenuPage() {
     setSelectedCategories(categories);
   }
 
+  const FilterControls = () => (
+    <>
+      {/* Category Filter */}
+      <div className="space-y-4">
+        <h4 className="font-semibold">Category</h4>
+        <div className="space-y-2">
+          {categories.map((category) => (
+            <div key={category} className="flex items-center space-x-2">
+              <Checkbox
+                id={`cat-${category}`}
+                checked={selectedCategories.includes(category)}
+                onCheckedChange={() => handleCategoryChange(category)}
+              />
+              <label htmlFor={`cat-${category}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                {category}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <Separator className="my-6" />
+
+      {/* Price Filter */}
+      <div className="space-y-4">
+        <h4 className="font-semibold">Price Range</h4>
+        {isClient ? (
+          <Slider
+              min={0}
+              max={maxPrice}
+              step={50}
+              value={priceRange}
+              onValueChange={(value) => setPriceRange(value as [number, number])}
+          />
+        ) : (
+          <Skeleton className="h-5 w-full" />
+        )}
+        <div className="flex justify-between text-sm text-muted-foreground">
+            <span>₹{priceRange[0]}</span>
+            <span>₹{priceRange[1]}</span>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1 container mx-auto py-8 px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
-          <aside className="lg:col-span-1">
+          {/* Filters Sidebar (Desktop) */}
+          <aside className="hidden lg:block lg:col-span-1">
             <Card className="p-6 sticky top-24 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-semibold font-headline flex items-center gap-2">
@@ -113,47 +159,7 @@ export default function MenuPage() {
                         <X className="mr-1 h-3 w-3" /> Reset
                     </Button>
                 </div>
-                
-                {/* Category Filter */}
-                <div className="space-y-4">
-                  <h4 className="font-semibold">Category</h4>
-                  <div className="space-y-2">
-                    {categories.map((category) => (
-                      <div key={category} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={category}
-                          checked={selectedCategories.includes(category)}
-                          onCheckedChange={() => handleCategoryChange(category)}
-                        />
-                        <label htmlFor={category} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          {category}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator className="my-6" />
-
-                {/* Price Filter */}
-                <div className="space-y-4">
-                  <h4 className="font-semibold">Price Range</h4>
-                  {isClient ? (
-                    <Slider
-                        min={0}
-                        max={maxPrice}
-                        step={50}
-                        value={priceRange}
-                        onValueChange={(value) => setPriceRange(value as [number, number])}
-                    />
-                  ) : (
-                    <Skeleton className="h-5 w-full" />
-                  )}
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>₹{priceRange[0]}</span>
-                      <span>₹{priceRange[1]}</span>
-                  </div>
-                </div>
+                <FilterControls />
             </Card>
           </aside>
 
@@ -166,15 +172,36 @@ export default function MenuPage() {
                 </p>
             </div>
              
-             {/* Search Bar */}
-            <div className="relative mb-8">
-              <Input
-                placeholder="Search for an item..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 text-base shadow-sm"
-              />
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+             {/* Search Bar & Mobile Filter Trigger */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="relative flex-1">
+                <Input
+                  placeholder="Search for an item..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 h-12 text-base shadow-sm"
+                />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              </div>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" className="lg:hidden h-12 flex items-center gap-2 shadow-sm">
+                    <SlidersHorizontal className="h-5 w-5" />
+                    <span>Filters</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[300px] sm:w-[340px]">
+                   <SheetHeader className="mb-6">
+                      <SheetTitle className="flex items-center gap-2">
+                        <SlidersHorizontal className="h-5 w-5 text-primary"/>
+                        Filter Menu Items
+                      </SheetTitle>
+                    </SheetHeader>
+                    <div className="p-1">
+                      <FilterControls />
+                    </div>
+                </SheetContent>
+              </Sheet>
             </div>
 
             {filteredItems.length > 0 ? (
