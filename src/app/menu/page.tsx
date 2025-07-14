@@ -131,7 +131,7 @@ export default function MenuPage() {
   const FilterControls = () => (
     <Accordion type="multiple" defaultValue={['category', 'price']} className="w-full">
       <AccordionItem value="category">
-        <AccordionTrigger className="text-base font-semibold">
+        <AccordionTrigger className="text-base font-semibold hover:no-underline">
           <div className="flex items-center gap-2">
             <ListFilter className="h-5 w-5 text-primary" />
             Category
@@ -156,7 +156,7 @@ export default function MenuPage() {
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="dietary">
-        <AccordionTrigger className="text-base font-semibold">
+        <AccordionTrigger className="text-base font-semibold hover:no-underline">
           <div className="flex items-center gap-2">
             <Tag className="h-5 w-5 text-primary" />
             Dietary Options
@@ -181,7 +181,7 @@ export default function MenuPage() {
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="price">
-        <AccordionTrigger className="text-base font-semibold">
+        <AccordionTrigger className="text-base font-semibold hover:no-underline">
           <div className="flex items-center gap-2">
             <DollarSign className="h-5 w-5 text-primary" />
             Price Range
