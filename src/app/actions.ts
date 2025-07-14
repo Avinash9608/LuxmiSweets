@@ -1,3 +1,4 @@
+
 // This file is empty, but it's a good practice to have it for future server actions.
 "use server";
 
@@ -16,7 +17,11 @@ type FormData = z.infer<typeof formSchema>;
 
 const quickOrderSchema = z.object({
   name: z.string(),
-  price: z.string(),
+  email: z.string(),
+  phone: z.string().optional(),
+  location: z.string(),
+  itemName: z.string(),
+  itemPrice: z.string(),
 });
 
 type QuickOrderData = z.infer<typeof quickOrderSchema>;
@@ -56,19 +61,42 @@ const generateQuickOrderHtmlMessage = (data: QuickOrderData) => {
     return `
       <div style="font-family: Arial, sans-serif; line-height: 1.6;">
         <h2 style="color: #673AB7;">New Quick Order Request</h2>
-        <p>You've received a new quick order from the menu:</p>
-        <table style="width: 100%; border-collapse: collapse;">
+        <p>You've received a new quick order from the menu. Please contact the customer to confirm.</p>
+        
+        <h3 style="color: #673AB7; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 20px;">Item Details</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
           <tr style="background-color: #f2f2f2;">
-            <td style="padding: 12px; border: 1px solid #ddd;"><strong>Item:</strong></td>
-            <td style="padding: 12px; border: 1px solid #ddd;">${data.name}</td>
+            <td style="padding: 12px; border: 1px solid #ddd; width: 30%;"><strong>Item:</strong></td>
+            <td style="padding: 12px; border: 1px solid #ddd;">${data.itemName}</td>
           </tr>
           <tr>
             <td style="padding: 12px; border: 1px solid #ddd;"><strong>Price:</strong></td>
-            <td style="padding: 12px; border: 1px solid #ddd;">${data.price}</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">${data.itemPrice}</td>
           </tr>
         </table>
-        <p style="margin-top: 20px;">Please contact the customer to confirm the order details and provide payment information.</p>
-        <p style="color: #673AB7; font-weight: bold;">LuxmiSweets</p>
+
+        <h3 style="color: #673AB7; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 20px;">Customer Details</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="background-color: #f2f2f2;">
+                <td style="padding: 12px; border: 1px solid #ddd; width: 30%;"><strong>Name:</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${data.name}</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Email:</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;"><a href="mailto:${data.email}">${data.email}</a></td>
+            </tr>
+            <tr style="background-color: #f2f2f2;">
+                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Phone:</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${data.phone || "Not provided"}</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Location:</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${data.location}</td>
+            </tr>
+        </table>
+        
+        <p style="margin-top: 20px; font-style: italic;">Please reach out to the customer to finalize the order and arrange payment.</p>
+        <p style="color: #673AB7; font-weight: bold; margin-top: 30px;">LuxmiSweets</p>
       </div>
     `;
 };
@@ -113,10 +141,9 @@ export async function sendQuickOrderEmail(data: QuickOrderData) {
   const parsedData = quickOrderSchema.safeParse(data);
 
   if (!parsedData.success) {
+    console.error("Invalid quick order data:", parsedData.error.flatten());
     return { success: false, message: "Invalid data for quick order." };
   }
-
-  const { name, price } = parsedData.data;
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -131,8 +158,8 @@ export async function sendQuickOrderEmail(data: QuickOrderData) {
   const mailOptions = {
     from: `"LuxmiSweets Quick Orders" <${process.env.EMAIL_USER}>`,
     to: process.env.EMAIL_USER,
-    subject: `New Quick Order: ${name}`,
-    html: generateQuickOrderHtmlMessage({ name, price }),
+    subject: `New Quick Order: ${parsedData.data.itemName}`,
+    html: generateQuickOrderHtmlMessage(parsedData.data),
   };
 
   try {
