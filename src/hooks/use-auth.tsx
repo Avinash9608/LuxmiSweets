@@ -27,10 +27,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      // No need to fetch user data on login/register pages
+      // Don't fetch user on public-facing admin pages
       if (pathname.startsWith('/admin/login') || pathname.startsWith('/admin/register')) {
-        setLoading(false);
         setUser(null);
+        setLoading(false);
         return;
       }
       
@@ -40,24 +40,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           const data = await response.json();
           setUser(data);
         } else {
+          // This case is handled by middleware, which will redirect.
+          // Setting user to null is sufficient for the client-side.
           setUser(null);
-          // Only redirect if trying to access a protected dashboard route
-          if (pathname.startsWith('/admin/dashboard')) {
-            router.push('/admin/login');
-          }
         }
       } catch (error) {
+        // Also handled by middleware.
         setUser(null);
-        if (pathname.startsWith('/admin/dashboard')) {
-            router.push('/admin/login');
-        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [pathname, router]);
+  }, [pathname]);
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
