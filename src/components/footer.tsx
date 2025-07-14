@@ -36,7 +36,7 @@ export function Footer() {
 
   return (
     <>
-      <footer className="bg-secondary text-secondary-foreground">
+      <footer className="bg-card text-secondary-foreground border-t">
         <div className="container mx-auto py-12 px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           
           {/* Brand Identity */}
