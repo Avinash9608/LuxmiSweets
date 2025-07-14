@@ -151,7 +151,7 @@ export default function MenuPage() {
                         max={maxPrice}
                         step={50}
                         value={priceRange}
-                        onValueChange={(value) => setPriceRange(value)}
+                        onValueChange={(value) => setPriceRange(value as [number, number])}
                     />
                   ) : (
                     <Skeleton className="h-5 w-full" />
