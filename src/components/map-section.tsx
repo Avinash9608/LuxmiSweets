@@ -14,7 +14,7 @@ export function MapSection() {
       <CardContent className="flex-grow flex flex-col gap-4">
         <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
           <iframe
-            src="https://maps.google.com/maps?q=LuxmiSweets,Lakhna%20Bazar&t=&z=17&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=LuxmiSweets,Lakhna%20Bazar&t=&z=17&ie=UTF8&iwloc=B&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0 }}
