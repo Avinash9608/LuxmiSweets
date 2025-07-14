@@ -13,7 +13,7 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
         <AboutSection />
-        <MenuSection />
+        <MenuSection showExploreMoreButton={true} />
         <section id="order" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
           <div className="w-full px-4 md:px-6">
             <div className="mx-auto max-w-4xl text-center">

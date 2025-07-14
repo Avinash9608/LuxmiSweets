@@ -1,12 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "./ui/button";
 
 const menuItems = {
   cakes: [
@@ -44,7 +45,7 @@ const MenuItemCard = ({ name, price, image, hint }: { name: string; price: strin
   </Card>
 );
 
-export function MenuSection() {
+export function MenuSection({ showExploreMoreButton = true }: { showExploreMoreButton?: boolean }) {
   return (
     <section id="menu" className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="w-full px-4 md:px-6">
@@ -78,6 +79,14 @@ export function MenuSection() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {showExploreMoreButton && (
+          <div className="mt-12 text-center">
+            <Button asChild size="lg">
+              <Link href="/menu">Explore Full Menu</Link>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
