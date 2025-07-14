@@ -59,8 +59,20 @@ export function OrderItemDialog({ item, children }: OrderItemDialogProps) {
 
   const { isSubmitting } = form.formState;
 
-  const handleWhatsAppOrder = () => {
-    const message = `Hello LuxmiSweets, I would like to order:\n\nItem: ${item.name}\nPrice: ${fullPrice}`;
+  const handleWhatsAppOrder = async (data: QuickOrderForm) => {
+    const message = `Hello LuxmiSweets, I would like to place an order:
+
+*Item:* ${data.itemName}
+*Price:* ${data.itemPrice}
+
+*My Details:*
+*Name:* ${data.name}
+*Email:* ${data.email}
+*Phone:* ${data.phone || 'Not provided'}
+*Location:* ${data.location}
+
+Please confirm my order.`;
+
     const whatsappUrl = `https://wa.me/919608989499?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
     toast({
@@ -129,7 +141,7 @@ export function OrderItemDialog({ item, children }: OrderItemDialogProps) {
         <Separator />
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleEmailOrder)} className="space-y-4">
+          <form className="space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -196,10 +208,10 @@ export function OrderItemDialog({ item, children }: OrderItemDialogProps) {
             />
 
             <DialogFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-4">
-                <Button type="button" onClick={handleWhatsAppOrder} variant="secondary">
+                <Button type="button" onClick={form.handleSubmit(handleWhatsAppOrder)} variant="secondary">
                     <MessageCircle className="mr-2" /> Order on WhatsApp
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
+                <Button type="button" onClick={form.handleSubmit(handleEmailOrder)} disabled={isSubmitting}>
                     {isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     ) : (
