@@ -3,7 +3,10 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Swiper from 'swiper';
-import 'swiper/swiper-bundle.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/parallax';
 import { Parallax, Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 Swiper.use([Parallax, Navigation, Pagination, Autoplay]);
