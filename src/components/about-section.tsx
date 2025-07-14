@@ -10,10 +10,10 @@ export function AboutSection() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-foreground">
-              Experience LuxmiSweets, Discover the Best Part of Your Day!
+              ✨ Experience LuxmiSweets<br />Discover the Best Part of Your Day!
             </h2>
             <p className="max-w-[900px] mx-auto text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+              At LuxmiSweets, we believe that food is more than just taste — it’s joy, comfort, and connection. From a piping-hot samosa in the morning to a beautifully customized cake in the evening, we serve smiles all day long. Whether you're stopping by for a quick snack or placing a special order for a celebration, you'll always find freshness, flavor, and heartfelt service in everything we offer.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 text-center">
@@ -23,7 +23,7 @@ export function AboutSection() {
               </div>
               <h3 className="text-xl font-bold font-headline">Our Drinks</h3>
               <p className="text-muted-foreground">
-                Sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Need a quick cool-down? Our collection of cold drinks offers the perfect sip to refresh your day. From fizzy favorites to chilled juices, we’ve got your thirst covered.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4">
@@ -32,7 +32,7 @@ export function AboutSection() {
               </div>
               <h3 className="text-xl font-bold font-headline">Our Sweets</h3>
               <p className="text-muted-foreground">
-                Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                We prepare all our sweets fresh in-house, using classic recipes. Each bite is handcrafted with purity and love, perfect for gifting or a personal treat.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4">
@@ -41,7 +41,7 @@ export function AboutSection() {
               </div>
               <h3 className="text-xl font-bold font-headline">Our Cakes</h3>
               <p className="text-muted-foreground">
-                Lorem ipsum dolor sit amet, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Celebrating something special? Our cakes are baked and designed just the way you want — from flavors to custom designs for any occasion.
               </p>
             </div>
           </div>
