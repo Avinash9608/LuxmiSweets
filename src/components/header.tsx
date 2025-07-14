@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
+import { Logo } from "./logo";
 
 export function Header() {
   return (
@@ -8,6 +9,7 @@ export function Header() {
       <div className="flex h-14 items-center px-4 md:px-6">
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
+            <Logo />
             <span className="font-bold font-headline text-lg text-primary">LuxmiSweets</span>
           </Link>
         </div>
