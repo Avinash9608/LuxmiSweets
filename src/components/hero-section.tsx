@@ -21,7 +21,7 @@ const sliderData = [
     },
     {
         id: 2,
-        image: "/indian-sweets.webp",
+        image: "https://media.istockphoto.com/id/1054228718/photo/indian-sweets-in-a-plate-includes-gulab-jamun-rasgulla-kaju-katli-morichoor-bundi-laddu.webp?a=1&b=1&s=612x612&w=0&k=20&c=i_eG_hiRCHa1evPiSHYauXWHVSQ5LZ893QrdAlKB_vE=",
         hint: "indian sweets",
         title: "Exquisite Handcrafted Sweets",
         description: "From classic recipes to modern creations, every bite is a celebration of flavor and craftsmanship.",
