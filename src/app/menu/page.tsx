@@ -100,13 +100,6 @@ export default function MenuPage() {
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1 container mx-auto py-8 px-4 md:px-6">
-        <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tighter font-headline text-foreground">Our Full Menu</h1>
-            <p className="max-w-2xl mx-auto mt-4 text-muted-foreground md:text-lg">
-                Explore our entire collection of exquisite sweets, cakes, and drinks. Use the filters to find your perfect treat.
-            </p>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filters Sidebar */}
           <aside className="lg:col-span-1">
@@ -166,6 +159,13 @@ export default function MenuPage() {
 
           {/* Menu Grid */}
           <div className="lg:col-span-3">
+             <div className="mb-8">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tighter font-headline text-foreground">Our Full Menu</h1>
+                <p className="max-w-2xl mt-4 text-muted-foreground md:text-lg">
+                    Explore our entire collection of exquisite sweets, cakes, and drinks. Use the filters to find your perfect treat.
+                </p>
+            </div>
+             
              {/* Search Bar */}
             <div className="relative mb-8">
               <Input
@@ -184,7 +184,7 @@ export default function MenuPage() {
                   ))}
                 </div>
             ) : (
-              <div className="flex flex-col items-center justify-center text-center h-full bg-secondary/40 rounded-lg p-12 mt-12">
+              <div className="flex flex-col items-center justify-center text-center h-[400px] bg-secondary/40 rounded-lg p-12">
                   <Search className="h-16 w-16 text-muted-foreground/50 mb-4" />
                   <h3 className="text-2xl font-headline font-semibold">No Matches Found</h3>
                   <p className="text-muted-foreground mt-2">Try adjusting your filters to find what you're looking for.</p>
