@@ -21,8 +21,8 @@ const sliderData = [
     },
     {
         id: 2,
-        image: "https://placehold.co/1200x800.png",
-        hint: "colorful sweets",
+        image: "/indian-sweets.webp",
+        hint: "indian sweets",
         title: "Exquisite Handcrafted Sweets",
         description: "From classic recipes to modern creations, every bite is a celebration of flavor and craftsmanship.",
     },
