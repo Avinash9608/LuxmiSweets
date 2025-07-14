@@ -6,7 +6,7 @@ import User from '@/models/User';
 
 // For simplicity, we limit registration to these two emails.
 // In a real application, you might use an invite system or manual creation.
-const ADMIN_EMAILS = ['admin1@luxmisweets.com', 'admin2@luxmisweets.com'];
+const ADMIN_EMAILS = ['admin1@example.com', 'admin2@example.com'];
 
 export async function POST(req: NextRequest) {
   try {
