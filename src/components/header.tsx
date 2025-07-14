@@ -8,7 +8,7 @@ export function Header() {
       <div className="container flex h-14 items-center">
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="font-bold font-headline text-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">LuxmiSweet Delights</span>
+            <span className="font-bold font-headline text-lg bg-clip-text text-transparent bg-gradient-to-br from-primary to-[#FFD1FF] dark:from-accent dark:to-primary">LuxmiSweet Delights</span>
           </Link>
         </div>
         <nav className="flex flex-1 items-center space-x-4">

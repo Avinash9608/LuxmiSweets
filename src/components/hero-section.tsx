@@ -21,7 +21,7 @@ export function HeroSection() {
 
       <div className="container px-4 md:px-6 text-center z-20">
         <div className="max-w-4xl mx-auto">
-          <h1 className="font-headline text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-br from-primary to-accent drop-shadow-lg">
+          <h1 className="font-headline text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-br from-primary to-[#FFD1FF] dark:from-accent dark:to-primary drop-shadow-lg">
             Indulge in Divine Flavors
           </h1>
           <p className="mt-6 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
@@ -44,9 +44,9 @@ export function HeroSection() {
           100% { transform: translateY(0px) rotate(0deg); }
         }
         @keyframes float-delay {
-          0% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(25px) rotate(-10deg); }
-          100% { transform: translateY(0px) rotate(0deg); }
+          0% { transform: translateY(0px) rotate(-0deg); }
+          50% { transform: translateY(25px) rotate(10deg); }
+          100% { transform: translateY(0px) rotate(-0deg); }
         }
         .animate-float { animation: float infinite ease-in-out; }
         .animate-float-delay { animation: float-delay infinite ease-in-out; }
