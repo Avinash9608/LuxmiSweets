@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -98,14 +99,14 @@ export function HeroSection() {
                                     {slide.description}
                                 </div>
                                 <div className="upk-salf-button" data-swiper-parallax-y="-300" data-swiper-parallax-duration="1500">
-                                    <a className="link link--arrowed" href="#menu">read more
+                                    <Link className="link link--arrowed" href="/menu">read more
                                         <svg className="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32">
                                             <g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeMiterlimit="10">
                                                 <circle className="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
                                                 <path className="arrow-icon--arrow" d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
                                             </g>
                                         </svg>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
