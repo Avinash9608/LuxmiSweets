@@ -37,18 +37,36 @@ export function FaqSection() {
   return (
     <section id="faq" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid gap-12 lg:grid-cols-3">
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl font-headline">Frequently Asked Questions</h2>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed">
-                Have questions? We've got answers. If you don't find what you're looking for, feel free to contact us.
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-foreground">
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+            Have questions? We've got answers. Find what you're looking for below.
+          </p>
+        </div>
+
+        <div className="mx-auto max-w-3xl mt-12">
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            {faqData.map((faq, index) => (
+              <AccordionItem key={index} value={`item-${index + 1}`} className="bg-card border rounded-lg shadow-sm">
+                <AccordionTrigger className="text-left font-semibold text-lg px-6 py-4 hover:no-underline">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-base text-muted-foreground px-6 pb-4">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+
+        <div className="mt-16 text-center space-y-4">
+            <p className="text-muted-foreground">Can't find your answer? Get in touch with us directly.</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="https://wa.me/919123456789"
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -56,27 +74,11 @@ export function FaqSection() {
               </a>
               <a
                 href="mailto:orders@luxmisweets.com"
-                className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
                 <Mail className="mr-2 h-4 w-4" /> Email Us
               </a>
             </div>
-          </div>
-
-          <div className="lg:col-span-2">
-            <Accordion type="single" collapsible className="w-full">
-              {faqData.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index + 1}`}>
-                  <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-base text-muted-foreground">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
         </div>
       </div>
     </section>
