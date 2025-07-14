@@ -5,16 +5,13 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const { pathname } = request.nextUrl;
 
-  const isAuthPage = pathname.startsWith('/admin/login') || pathname.startsWith('/admin/register');
-  const isDashboardPage = pathname.startsWith('/admin/dashboard');
-
-  // If trying to access a protected page without a token, redirect to login
-  if (isDashboardPage && !token) {
+  // If trying to access admin dashboard without a token, redirect to login
+  if (pathname.startsWith('/admin/dashboard') && !token) {
     return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
   // If user is logged in (has a token) and tries to access login/register, redirect to dashboard
-  if (isAuthPage && token) {
+  if ((pathname.startsWith('/admin/login') || pathname.startsWith('/admin/register')) && token) {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url));
   }
 

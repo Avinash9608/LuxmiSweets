@@ -53,7 +53,10 @@ export default function LoginPage() {
         title: "Success",
         description: "Logged in successfully. Redirecting...",
       });
+      
+      // Use router.push which is better for this scenario
       router.push("/admin/dashboard");
+      
     } catch (error: any) {
       toast({
         variant: "destructive",
