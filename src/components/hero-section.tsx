@@ -14,7 +14,7 @@ Swiper.use([Parallax, Navigation, Pagination, Autoplay]);
 const sliderData = [
     {
         id: 1,
-        image: "https://placehold.co/1200x800.png",
+        image: "https://plus.unsplash.com/premium_photo-1714669899908-4b151851ee2a?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjA1fHxjYWtlfGVufDB8fDB8fHww",
         hint: "glowing cake",
         title: "Indulge in Divine Flavors",
         description: "Experience the taste of tradition and luxury with our handcrafted sweets, cakes, and refreshing drinks.",
@@ -28,7 +28,7 @@ const sliderData = [
     },
     {
         id: 3,
-        image: "https://placehold.co/1200x800.png",
+        image: "https://images.unsplash.com/photo-1629203849746-7357277a421b?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fGNvbGRkcmlua3xlbnwwfHwwfHx8MA%3D%3D",
         hint: "fancy drinks",
         title: "Refreshing & Unique Beverages",
         description: "Quench your thirst with our creative and delicious range of cold drinks, perfect for any occasion.",
