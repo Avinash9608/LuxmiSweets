@@ -1,9 +1,10 @@
 
-// This file is empty, but it's a good practice to have it for future server actions.
 "use server";
 
 import * as z from "zod";
 import nodemailer from "nodemailer";
+import "dotenv/config";
+
 
 const formSchema = z.object({
   category: z.string(),
@@ -26,6 +27,14 @@ const quickOrderSchema = z.object({
 
 type QuickOrderData = z.infer<typeof quickOrderSchema>;
 
+const checkEmailConfig = () => {
+    return (
+      process.env.EMAIL_HOST &&
+      process.env.EMAIL_PORT &&
+      process.env.EMAIL_USER &&
+      process.env.EMAIL_PASS
+    );
+};
 
 const generateHtmlMessage = (data: FormData) => {
     return `
@@ -103,6 +112,10 @@ const generateQuickOrderHtmlMessage = (data: QuickOrderData) => {
 
 
 export async function sendOrderEmail(data: FormData) {
+  if (!checkEmailConfig()) {
+    return { success: false, message: "Email service is not configured on the server." };
+  }
+
   const parsedData = formSchema.safeParse(data);
 
   if (!parsedData.success) {
@@ -138,6 +151,10 @@ export async function sendOrderEmail(data: FormData) {
 }
 
 export async function sendQuickOrderEmail(data: QuickOrderData) {
+  if (!checkEmailConfig()) {
+    return { success: false, message: "Email service is not configured on the server." };
+  }
+  
   const parsedData = quickOrderSchema.safeParse(data);
 
   if (!parsedData.success) {
