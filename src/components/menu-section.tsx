@@ -39,8 +39,12 @@ const MenuItemCard = ({ item }: { item: MenuItem }) => (
 );
 
 export async function MenuSection({ showExploreMoreButton = true }: { showExploreMoreButton?: boolean }) {
-  await connectDB();
-  const featuredItems = await MenuItemModel.find({ isFeatured: true }).limit(4).lean();
+  const db = await connectDB();
+  let featuredItems: any[] = [];
+
+  if (db) {
+    featuredItems = await MenuItemModel.find({ isFeatured: true }).limit(4).lean();
+  }
   
   const formattedItems: MenuItem[] = featuredItems.map(item => ({
     ...item,

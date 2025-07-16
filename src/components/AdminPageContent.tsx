@@ -52,7 +52,7 @@ import {
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Edit, Trash, PlusCircle, Unlock, Database, AlertTriangle } from 'lucide-react';
+import { Loader2, Edit, Trash, PlusCircle, Unlock, Database, AlertTriangle, ExternalLink } from 'lucide-react';
 import type { MenuItem } from '@/lib/types';
 import { menuSeedData } from '@/lib/menu-seed-data';
 
@@ -72,6 +72,7 @@ type MenuItemForm = z.infer<typeof menuItemSchema>;
 
 const DIETARY_OPTIONS = ['Eggless', 'Vegan', 'Gluten-Free'];
 const ADMIN_SECRET = "madhukar804453";
+const DB_IS_CONFIGURED = !!process.env.NEXT_PUBLIC_ATLAS_URI;
 
 export default function AdminPageContent() {
   const searchParams = useSearchParams();
@@ -103,7 +104,11 @@ export default function AdminPageContent() {
   useEffect(() => {
     if (secret === ADMIN_SECRET) {
       setIsAuthorized(true);
-      fetchMenuItems();
+      if (DB_IS_CONFIGURED) {
+        fetchMenuItems();
+      } else {
+        setIsLoading(false);
+      }
     } else {
       setIsAuthorized(false);
       setIsLoading(false);
@@ -240,7 +245,6 @@ export default function AdminPageContent() {
     setIsDialogOpen(true);
   };
   
-
   if (!isAuthorized) {
     return (
       <div className="flex h-screen items-center justify-center bg-secondary">
@@ -265,6 +269,32 @@ export default function AdminPageContent() {
       </div>
     );
   }
+
+  if (!DB_IS_CONFIGURED) {
+     return (
+        <div className="flex h-screen items-center justify-center bg-secondary">
+            <Card className="w-full max-w-lg text-center">
+            <CardHeader>
+                <CardTitle className="flex items-center justify-center gap-2">
+                    <Database className="h-6 w-6 text-primary"/> Database Not Configured
+                </CardTitle>
+                <CardDescription>
+                    To manage your menu, you need to set up a database connection. Please add your MongoDB connection string to your environment variables.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p className="text-sm text-muted-foreground">You can get a free database from MongoDB Atlas. Once you have your connection string (URI), add it to a <code className="bg-muted px-1 py-0.5 rounded-sm">.env.local</code> file in your project as <code className="bg-muted px-1 py-0.5 rounded-sm">ATLAS_URI</code>.</p>
+                <Button asChild className="mt-4">
+                    <a href="https://www.mongodb.com/atlas/database" target="_blank" rel="noopener noreferrer">
+                        Get MongoDB Atlas <ExternalLink className="ml-2 h-4 w-4"/>
+                    </a>
+                </Button>
+            </CardContent>
+            </Card>
+        </div>
+    );
+  }
+
 
   return (
     <div className="container mx-auto p-4 md:p-8">
