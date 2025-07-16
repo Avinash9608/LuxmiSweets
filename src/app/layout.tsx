@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { Chatbot } from "@/components/chatbot";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <Chatbot />
         </ThemeProvider>
       </body>
     </html>
