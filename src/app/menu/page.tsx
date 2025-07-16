@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
@@ -9,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Search, X, SlidersHorizontal, ListFilter, Tag, DollarSign, SortAsc, ShoppingCart } from "lucide-react";
+import { Search, X, SlidersHorizontal, ListFilter, Tag, DollarSign, SortAsc, ShoppingCart, Loader2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -23,35 +24,6 @@ const Slider = dynamic(() => import('@/components/ui/slider').then(mod => mod.Sl
   loading: () => <Skeleton className="h-2 w-full" />,
 });
 
-const allMenuItems: MenuItem[] = [
-    // Cakes
-    { name: "Chocolate Truffle Cake", category: "Cakes", price: 800, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "chocolate cake", dietary: ['Eggless'] },
-    { name: "Red Velvet Cake", category: "Cakes", price: 950, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "red velvet cake", dietary: ['Eggless'] },
-    { name: "Pineapple Paradise", category: "Cakes", price: 750, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "pineapple cake", dietary: ['Eggless'] },
-    { name: "Classic Cheesecake", category: "Cakes", price: 1200, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "cheesecake" },
-    { name: "Black Forest Gateau", category: "Cakes", price: 850, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "black forest cake", dietary: ['Eggless'] },
-    { name: "Mango Mousse Cake", category: "Cakes", price: 1000, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "mango cake", dietary: ['Eggless'] },
-
-    // Sweets
-    { name: "Kaju Katli", category: "Sweets", price: 1100, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "indian sweets", dietary: ['Vegan', 'Gluten-Free'] },
-    { name: "Motichoor Laddu", category: "Sweets", price: 600, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "ladoo", dietary: [] },
-    { name: "Golden Jalebi", category: "Sweets", price: 550, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "jalebi", dietary: ['Vegan'] },
-    { name: "Royal Gulab Jamun", category: "Sweets", price: 500, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "gulab jamun", dietary: [] },
-    { name: "Rasmalai", category: "Sweets", price: 700, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "rasmalai", dietary: ['Gluten-Free'] },
-    { name: "Pista Barfi", category: "Sweets", price: 1200, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "pista barfi", dietary: ['Gluten-Free'] },
-
-    // Drinks
-    { name: "Mango Lassi", category: "Drinks", price: 150, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "mango lassi", dietary: ['Gluten-Free'] },
-    { name: "Rose Sherbet", category: "Drinks", price: 120, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "rose drink", dietary: ['Vegan', 'Gluten-Free'] },
-    { name: "Cold Coffee", category: "Drinks", price: 180, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "cold coffee" },
-    { name: "Fresh Lime Soda", category: "Drinks", price: 100, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "lime soda", dietary: ['Vegan', 'Gluten-Free'] },
-    { name: "Badam Milk", category: "Drinks", price: 160, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "badam milk", dietary: ['Gluten-Free'] },
-    { name: "Thandai", category: "Drinks", price: 200, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "thandai drink" },
-];
-
-const categories = ["Cakes", "Sweets", "Drinks"];
-const dietaryOptions = ["Eggless", "Vegan", "Gluten-Free"];
-const maxPrice = Math.max(...allMenuItems.map(item => item.price));
 
 const MenuItemCard = ({ item }: { item: MenuItem }) => (
   <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl group border-transparent hover:border-primary flex flex-col">
@@ -77,16 +49,46 @@ const MenuItemCard = ({ item }: { item: MenuItem }) => (
 );
 
 export default function MenuPage() {
+  const [allMenuItems, setAllMenuItems] = useState<MenuItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [priceRange, setPriceRange] = useState([0, maxPrice]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(categories);
+  const [priceRange, setPriceRange] = useState([0, 2000]);
+  const [maxPrice, setMaxPrice] = useState(2000);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedDietary, setSelectedDietary] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("default");
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
+    const fetchMenuItems = async () => {
+      try {
+        setIsLoading(true);
+        const res = await fetch('/api/menu');
+        const data = await res.json();
+        if(res.ok) {
+          setAllMenuItems(data);
+          const maxItemPrice = Math.max(...data.map((item: MenuItem) => item.price), 0);
+          setMaxPrice(maxItemPrice > 0 ? maxItemPrice : 2000);
+          setPriceRange([0, maxItemPrice > 0 ? maxItemPrice : 2000]);
+          const uniqueCategories = [...new Set(data.map((item: MenuItem) => item.category))];
+          setSelectedCategories(uniqueCategories);
+        }
+      } catch (error) {
+        console.error("Failed to fetch menu items", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMenuItems();
   }, []);
+
+  const categories = useMemo(() => [...new Set(allMenuItems.map(item => item.category))], [allMenuItems]);
+  const dietaryOptions = useMemo(() => {
+      const allOptions = allMenuItems.flatMap(item => item.dietary || []);
+      return [...new Set(allOptions)];
+  }, [allMenuItems]);
+
 
   const filteredItems = useMemo(() => {
     let items = allMenuItems.filter((item) => {
@@ -112,7 +114,7 @@ export default function MenuPage() {
     }
 
     return items;
-  }, [searchQuery, priceRange, selectedCategories, selectedDietary, sortBy]);
+  }, [searchQuery, priceRange, selectedCategories, selectedDietary, sortBy, allMenuItems]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prev) =>
@@ -165,6 +167,7 @@ export default function MenuPage() {
           </div>
         </AccordionContent>
       </AccordionItem>
+      {dietaryOptions.length > 0 && (
       <AccordionItem value="dietary">
         <AccordionTrigger className="text-base font-semibold hover:no-underline">
           <div className="flex items-center gap-2">
@@ -190,6 +193,7 @@ export default function MenuPage() {
           </div>
         </AccordionContent>
       </AccordionItem>
+      )}
       <AccordionItem value="price">
         <AccordionTrigger className="text-base font-semibold hover:no-underline">
           <div className="flex items-center gap-2">
@@ -294,8 +298,12 @@ export default function MenuPage() {
                 </Sheet>
               </div>
             </div>
-
-            {filteredItems.length > 0 ? (
+            
+            {isLoading ? (
+              <div className="flex items-center justify-center h-[400px]">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+              </div>
+            ) : filteredItems.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
                   {filteredItems.map((item) => (
                     <MenuItemCard key={item.name} item={item} />
@@ -318,3 +326,4 @@ export default function MenuPage() {
     </div>
   );
 }
+

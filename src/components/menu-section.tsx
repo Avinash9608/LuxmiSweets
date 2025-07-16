@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,33 +11,9 @@ import { Button } from "./ui/button";
 import { OrderItemDialog } from "./order-item-dialog";
 import type { MenuItem } from "@/lib/types";
 import { ShoppingCart } from "lucide-react";
+import MenuItemModel from "@/models/MenuItem";
+import { connectDB } from "@/lib/db";
 
-const menuItems = {
-  cakes: [
-    { name: "Chocolate Truffle Cake", price: 800, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "chocolate cake", category: "Cakes" },
-    { name: "Red Velvet Cake", price: 950, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "red velvet cake", category: "Cakes" },
-    { name: "Pineapple Paradise", price: 750, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "pineapple cake", category: "Cakes" },
-    { name: "Classic Cheesecake", price: 1200, priceUnit: "per cake", image: "https://placehold.co/300x200.png", hint: "cheesecake", category: "Cakes" },
-  ],
-  sweets: [
-    { name: "Kaju Katli", price: 1100, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "indian sweets", category: "Sweets" },
-    { name: "Motichoor Laddu", price: 600, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "ladoo", category: "Sweets" },
-    { name: "Golden Jalebi", price: 550, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "jalebi", category: "Sweets" },
-    { name: "Royal Gulab Jamun", price: 500, priceUnit: "/kg", image: "https://placehold.co/300x200.png", hint: "gulab jamun", category: "Sweets" },
-  ],
-  drinks: [
-    { name: "Mango Lassi", price: 150, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "mango lassi", category: "Drinks" },
-    { name: "Rose Sherbet", price: 120, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "rose drink", category: "Drinks" },
-    { name: "Cold Coffee", price: 180, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "cold coffee", category: "Drinks" },
-    { name: "Fresh Lime Soda", price: 100, priceUnit: "per glass", image: "https://placehold.co/300x200.png", hint: "lime soda", category: "Drinks" },
-  ],
-};
-
-const featuredItems: MenuItem[] = [
-    ...menuItems.cakes.slice(0, 2),
-    ...menuItems.sweets.slice(0, 1),
-    ...menuItems.drinks.slice(0, 1)
-];
 
 const MenuItemCard = ({ item }: { item: MenuItem }) => (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl group border-transparent hover:border-primary flex flex-col">
@@ -61,7 +38,15 @@ const MenuItemCard = ({ item }: { item: MenuItem }) => (
     </Card>
 );
 
-export function MenuSection({ showExploreMoreButton = true }: { showExploreMoreButton?: boolean }) {
+export async function MenuSection({ showExploreMoreButton = true }: { showExploreMoreButton?: boolean }) {
+  await connectDB();
+  const featuredItems = await MenuItemModel.find({ isFeatured: true }).limit(4).lean();
+  
+  const formattedItems: MenuItem[] = featuredItems.map(item => ({
+    ...item,
+    _id: item._id.toString(),
+  }));
+
   return (
     <section id="menu" className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="w-full px-4 md:px-6">
@@ -74,9 +59,15 @@ export function MenuSection({ showExploreMoreButton = true }: { showExploreMoreB
           </div>
         </div>
         <div className="w-full max-w-6xl mx-auto mt-12">
+          {formattedItems.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mt-8">
-              {featuredItems.map((item) => <MenuItemCard key={item.name} item={item} />)}
+              {formattedItems.map((item) => <MenuItemCard key={item.name} item={item} />)}
             </div>
+          ) : (
+             <div className="text-center py-12 text-muted-foreground">
+                No featured items available at the moment.
+             </div>
+          )}
         </div>
 
         {showExploreMoreButton && (

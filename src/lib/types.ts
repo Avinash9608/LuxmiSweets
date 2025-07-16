@@ -1,4 +1,6 @@
+
 export interface MenuItem {
+    _id?: string;
     name: string;
     category: string;
     price: number;
@@ -6,4 +8,5 @@ export interface MenuItem {
     image: string;
     hint: string;
     dietary?: string[];
+    isFeatured?: boolean;
 }
