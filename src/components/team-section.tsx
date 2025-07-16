@@ -80,8 +80,8 @@ export function TeamSection() {
                 <Image
                   src={member.image}
                   alt={member.name}
-                  width={160}
-                  height={160}
+                  width={144}
+                  height={144}
                   data-ai-hint={member.hint}
                   className="rounded-full object-cover shadow-lg border-4 border-white dark:border-secondary transition-transform duration-300 hover:scale-105"
                 />
