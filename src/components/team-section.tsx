@@ -8,25 +8,25 @@ const teamMembers = [
   {
     name: "Ramesh Kumar",
     role: "Founder & Head Chef",
-    image: "https://placehold.co/200x200.png",
+    image: "https://images.unsplash.com/photo-1708494204520-9b173ddcd627?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fHJhbWVzaHxlbnwwfHwwfHx8MA%3D%3D",
     hint: "indian man portrait",
   },
   {
     name: "Sita Devi",
     role: "Sweet Specialist",
-    image: "https://placehold.co/200x200.png",
+    image: "https://images.unsplash.com/photo-1575992009113-f4410734aad8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z2lybCUyMGluZGlhfGVufDB8fDB8fHww",
     hint: "indian woman portrait",
   },
   {
     name: "Sonu Kumar",
     role: "Cake Designer",
-    image: "https://placehold.co/200x200.png",
+    image: "https://images.unsplash.com/photo-1692592611113-f4c0d0f36ea0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJveSUyMGluZGlhfGVufDB8fDB8fHww",
     hint: "young indian man",
   },
   {
     name: "Ajay Kumar",
     role: "Orders & Delivery",
-    image: "https://placehold.co/200x200.png",
+    image: "https://images.unsplash.com/photo-1633573745590-4154e1eb56b8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fGJveSUyMGluZGlhfGVufDB8fDB8fHww",
     hint: "man smiling",
   },
 ];
