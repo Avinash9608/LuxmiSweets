@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -34,16 +35,16 @@ const testimonials = [
     author: "Anjali Mehta",
     title: "Regular Customer",
     avatar: "AM",
-    image: "https://placehold.co/100x100.png",
-    hint: "woman smile"
+    image: "https://plus.unsplash.com/premium_photo-1682096088550-5c61987fe860?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Z2lybCUyMGluZGlhfGVufDB8fDB8fHww",
+    hint: "indian woman"
   },
   {
     quote: "The custom order process was seamless. I sent them a design, and they replicated it beautifully on the cake. Very professional and talented team.",
     author: "Vikram Singh",
     title: "Wedding Order",
     avatar: "VS",
-    image: "https://placehold.co/100x100.png",
-    hint: "man smiling"
+    image: "https://images.unsplash.com/photo-1591675101827-3b2271747d79?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fGJveSUyMGluZGlhfGVufDB8fDB8fHww",
+    hint: "indian man"
   },
 ];
 
