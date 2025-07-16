@@ -24,6 +24,10 @@ const ChatInputSchema = z.array(ChatMessageSchema);
 
 // This is the main function the frontend will call
 export async function chat(history: ChatMessage[]): Promise<string> {
+    if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_API_KEY) {
+        return "I'm sorry, the chatbot feature is not configured on the server. An API key is required.";
+    }
+
   // Check if DB is configured, if not, use seed data as a fallback.
   const db = await connectDB();
   let menuItems;
