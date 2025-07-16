@@ -44,8 +44,8 @@ export async function chat(history: ChatMessage[]): Promise<string> {
     `- ${item.name} (${item.category}): ₹${item.price} ${item.priceUnit || ''}`
   ).join('\n');
 
-  const { output } = await chatFlow({ history, menu: menuString });
-  return output || "I'm sorry, I couldn't process that. Please try again.";
+  const response = await chatFlow({ history, menu: menuString });
+  return response || "I'm sorry, I couldn't process that. Please try again.";
 }
 
 // Define the structured input for our Genkit flow
