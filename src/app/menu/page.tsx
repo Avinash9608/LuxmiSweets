@@ -65,13 +65,13 @@ export default function MenuPage() {
       try {
         setIsLoading(true);
         const res = await fetch('/api/menu');
-        const data = await res.json();
+        const data = await res.json() as MenuItem[];
         if(res.ok) {
           setAllMenuItems(data);
           const maxItemPrice = Math.max(...data.map((item: MenuItem) => item.price), 0);
           setMaxPrice(maxItemPrice > 0 ? maxItemPrice : 2000);
           setPriceRange([0, maxItemPrice > 0 ? maxItemPrice : 2000]);
-          const uniqueCategories = [...new Set(data.map((item: MenuItem) => item.category))];
+          const uniqueCategories = [...new Set(data.map((item: MenuItem) => item.category))]; // Explicitly type item here
           setSelectedCategories(uniqueCategories);
         }
       } catch (error) {
@@ -83,7 +83,7 @@ export default function MenuPage() {
     fetchMenuItems();
   }, []);
 
-  const categories = useMemo(() => [...new Set(allMenuItems.map(item => item.category))], [allMenuItems]);
+  const categories = useMemo(() => [...new Set(allMenuItems.map((item: MenuItem) => item.category))], [allMenuItems]); // Explicitly type item here as well
   const dietaryOptions = useMemo(() => {
       const allOptions = allMenuItems.flatMap(item => item.dietary || []);
       return [...new Set(allOptions)];

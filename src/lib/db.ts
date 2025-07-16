@@ -3,6 +3,12 @@ import mongoose from 'mongoose';
 
 const ATLAS_URI = process.env.ATLAS_URI;
 
+interface Cached {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
+
+
 // Gracefully handle missing ATLAS_URI
 if (!ATLAS_URI) {
   console.warn(
@@ -15,10 +21,10 @@ if (!ATLAS_URI) {
   );
 }
 
-let cached = global.mongoose;
+let cached = (global as any).mongoose as Cached;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = (global as any).mongoose = { conn: null, promise: null };
 }
 
 export async function connectDB() {
@@ -36,7 +42,7 @@ export async function connectDB() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(ATLAS_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(ATLAS_URI!, opts).then((mongoose: typeof import("mongoose")) => {
       return mongoose;
     });
   }
