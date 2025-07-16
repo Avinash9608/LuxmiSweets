@@ -32,6 +32,7 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import {
   Form,
@@ -332,6 +333,9 @@ export default function AdminPage() {
         <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
             <DialogTitle>{editingItem ? 'Edit' : 'Add'} Menu Item</DialogTitle>
+            <DialogDescription>
+              {editingItem ? 'Update the details for this menu item.' : 'Fill out the form to add a new item to your menu.'}
+            </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4 max-h-[80vh] overflow-y-auto p-2">
