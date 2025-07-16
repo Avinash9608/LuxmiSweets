@@ -9,8 +9,9 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card"
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { chat, ChatHistory } from "@/ai/flows/chat-flow";
-import { Avatar, AvatarFallback } from "./ui/avatar";
+import { chat } from "@/app/actions";
+import type { ChatHistory } from "@/ai/flows/chat-flow";
+import { Avatar } from "./ui/avatar";
 
 export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);

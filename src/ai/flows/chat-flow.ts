@@ -4,7 +4,7 @@
 /**
  * @fileOverview A chatbot flow for LuxmiSweets.
  * 
- * - chat - A function that handles the chatbot conversation.
+ * - chatFlow - A Genkit flow that handles the chatbot conversation.
  * - ChatMessage - The type for a single chat message.
  */
 
@@ -14,64 +14,48 @@ import MenuItemModel from '@/models/MenuItem';
 import { connectDB } from '@/lib/db';
 import { menuSeedData } from '@/lib/menu-seed-data';
 
+
 const ChatMessageSchema = z.object({
-  role: z.enum(['user', 'model', 'system', 'tool']),
+  role: z.enum(['user', 'model', 'system']),
   content: z.array(z.object({text: z.string()})),
 });
 export type ChatMessage = z.infer<typeof ChatMessageSchema>;
 
-const ChatInputSchema = z.array(z.object({
+const ChatHistorySchema = z.array(z.object({
   role: z.enum(['user', 'bot']),
   content: z.string(),
 }));
+export type ChatHistory = z.infer<typeof ChatHistorySchema>;
 
-export type ChatHistory = z.infer<typeof ChatInputSchema>;
 
-
-// This is the main function the frontend will call
-export async function chat(history: ChatHistory): Promise<string> {
-    if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_API_KEY) {
-        return "I'm sorry, the chatbot feature is not configured on the server. An API key is required.";
-    }
-
-  // Check if DB is configured, if not, use seed data as a fallback.
-  const db = await connectDB();
-  let menuItems;
-  if (db) {
-    // Using lean() for performance, as we only need plain JS objects
-    menuItems = await MenuItemModel.find({}).lean();
-  } else {
-    // If DB is not available, use the seed data
-    menuItems = menuSeedData;
-  }
-  
-  // Format the menu items into a string for the prompt
-  const menuString = menuItems.map(item => 
-    `- ${item.name} (${item.category}): ₹${item.price} ${item.priceUnit || ''}`
-  ).join('\n');
-
-  const response = await chatFlow({ history, menu: menuString });
-  return response || "I'm sorry, I couldn't process that. Please try again.";
-}
-
-// Define the structured input for our Genkit flow
-const FlowInputSchema = z.object({
-    history: ChatInputSchema,
-    menu: z.string(),
-});
-
-const chatFlow = ai.defineFlow(
+export const chatFlow = ai.defineFlow(
   {
     name: 'chatFlow',
-    inputSchema: FlowInputSchema,
+    inputSchema: ChatHistorySchema,
     outputSchema: z.string(),
   },
-  async ({ history, menu }) => {
+  async (history) => {
     
+    // Check if DB is configured, if not, use seed data as a fallback.
+    const db = await connectDB();
+    let menuItems;
+    if (db) {
+      // Using lean() for performance, as we only need plain JS objects
+      menuItems = await MenuItemModel.find({}).lean();
+    } else {
+      // If DB is not available, use the seed data
+      menuItems = menuSeedData;
+    }
+    
+    // Format the menu items into a string for the prompt
+    const menuString = menuItems.map(item => 
+      `- ${item.name} (${item.category}): ₹${item.price} ${item.priceUnit || ''}`
+    ).join('\n');
+
     const systemPrompt = `You are a friendly and helpful customer service assistant for a local sweet shop called LuxmiSweets. Your goal is to answer customer questions accurately and encourage them to place an order.
 
       Here is the current menu:
-      ${menu}
+      ${menuString}
 
       Shop Information:
       - Location: Main Road, Lakhna, Bihar – 804453
@@ -105,6 +89,6 @@ const chatFlow = ai.defineFlow(
       },
     });
 
-    return response.text;
+    return response.text || "I'm sorry, I couldn't process that. Please try again.";
   }
 );

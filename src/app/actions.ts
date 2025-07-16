@@ -4,6 +4,7 @@
 import * as z from "zod";
 import nodemailer from "nodemailer";
 import "dotenv/config";
+import { chatFlow, type ChatHistory } from "@/ai/flows/chat-flow";
 
 
 const formSchema = z.object({
@@ -35,6 +36,16 @@ const checkEmailConfig = () => {
       process.env.EMAIL_PASS
     );
 };
+
+// This is the main function the frontend will call for the chatbot
+export async function chat(history: ChatHistory): Promise<string> {
+    if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_API_KEY) {
+        return "I'm sorry, the chatbot feature is not configured on the server. An API key is required.";
+    }
+  const response = await chatFlow(history);
+  return response;
+}
+
 
 const generateHtmlMessage = (data: FormData) => {
     return `
