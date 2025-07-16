@@ -71,6 +71,7 @@ const menuItemSchema = z.object({
 type MenuItemForm = z.infer<typeof menuItemSchema>;
 
 const DIETARY_OPTIONS = ['Eggless', 'Vegan', 'Gluten-Free'];
+const ADMIN_SECRET = "madhukar804453";
 
 export default function AdminPage() {
   const searchParams = useSearchParams();
@@ -101,7 +102,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     // Basic secret key check
-    if (secret === process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY) {
+    if (secret === ADMIN_SECRET) {
       setIsAuthorized(true);
       fetchMenuItems();
     } else {

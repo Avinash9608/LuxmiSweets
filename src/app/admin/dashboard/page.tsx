@@ -43,7 +43,7 @@ export default function AdminDashboard() {
           <h2 className="text-xl font-semibold mb-4">Manage Menu</h2>
           <p className="text-muted-foreground mb-4">Add, edit, or delete menu items that appear on your website.</p>
           <Button asChild>
-            <Link href={`/admin?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}`}>Go to Menu Management</Link>
+            <Link href="/admin?secret=madhukar804453">Go to Menu Management</Link>
           </Button>
         </div>
         <div className="bg-card p-6 rounded-lg shadow-md">
