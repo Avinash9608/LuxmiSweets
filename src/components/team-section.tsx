@@ -105,9 +105,9 @@ export function TeamSection() {
             </div>
             <div className="lg:col-span-2 relative aspect-square">
                  <Image 
-                    src="https://placehold.co/400x400.png"
-                    data-ai-hint="family kitchen sweets"
-                    alt="Family kitchen"
+                    src="https://images.unsplash.com/photo-1572095755818-8fd546d228a1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fENha2UlMjBzd2VldHMlMjBzaG9wfGVufDB8fDB8fHww"
+                    data-ai-hint="sweet shop"
+                    alt="Interior of a sweet shop"
                     fill
                     className="rounded-lg shadow-lg object-cover transform transition-transform duration-500 hover:scale-105"
                 />
