@@ -54,7 +54,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Edit, Trash, PlusCircle, Unlock, Database, AlertTriangle } from 'lucide-react';
 import type { MenuItem } from '@/lib/types';
-import { menuSeedData } from '/public/menu-seed-data';
+import { menuSeedData } from '@/lib/menu-seed-data';
 
 const menuItemSchema = z.object({
   _id: z.string().optional(),

@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import MenuItem from '@/models/MenuItem';
-import { menuSeedData } from '/public/menu-seed-data';
+import { menuSeedData } from '@/lib/menu-seed-data';
 
 export async function POST(req: NextRequest) {
     try {
