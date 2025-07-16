@@ -19,16 +19,16 @@ const testimonials = [
     author: "Priya Sharma",
     title: "Birthday Celebration",
     avatar: "PS",
-    image: "https://placehold.co/100x100.png",
-    hint: "woman portrait"
+    image: "https://images.unsplash.com/photo-1710449823856-b04144b66b8a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGdpcmwlMjBpbmRpYXxlbnwwfHwwfHx8MA%3D%3D",
+    hint: "indian woman smiling"
   },
   {
     quote: "I ordered a custom box of sweets for a festival, and LuxmiSweets exceeded my expectations. The taste, the presentation, everything was perfect.",
     author: "Rahul Verma",
     title: "Corporate Client",
     avatar: "RV",
-    image: "https://placehold.co/100x100.png",
-    hint: "man portrait"
+    image: "https://images.unsplash.com/photo-1630423961052-25b829557afb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fGJveSUyMGluZGlhfGVufDB8fDB8fHww",
+    hint: "indian man professional"
   },
   {
     quote: "Their Mango Lassi is to die for! So refreshing and authentic. It’s my go-to drink whenever I visit. Highly recommended!",
