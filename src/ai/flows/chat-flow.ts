@@ -15,15 +15,21 @@ import { connectDB } from '@/lib/db';
 import { menuSeedData } from '@/lib/menu-seed-data';
 
 const ChatMessageSchema = z.object({
-  role: z.enum(['user', 'bot']),
-  content: z.string(),
+  role: z.enum(['user', 'model', 'system', 'tool']),
+  content: z.array(z.object({text: z.string()})),
 });
 export type ChatMessage = z.infer<typeof ChatMessageSchema>;
 
-const ChatInputSchema = z.array(ChatMessageSchema);
+const ChatInputSchema = z.array(z.object({
+  role: z.enum(['user', 'bot']),
+  content: z.string(),
+}));
+
+export type ChatHistory = z.infer<typeof ChatInputSchema>;
+
 
 // This is the main function the frontend will call
-export async function chat(history: ChatMessage[]): Promise<string> {
+export async function chat(history: ChatHistory): Promise<string> {
     if (!process.env.GEMINI_API_KEY && !process.env.GOOGLE_API_KEY) {
         return "I'm sorry, the chatbot feature is not configured on the server. An API key is required.";
     }
@@ -61,10 +67,8 @@ const chatFlow = ai.defineFlow(
     outputSchema: z.string(),
   },
   async ({ history, menu }) => {
-    // Generate the chat response using the Gemini model
-    const response = await ai.generate({
-      model: 'googleai/gemini-2.0-flash',
-      prompt: `You are a friendly and helpful customer service assistant for a local sweet shop called LuxmiSweets. Your goal is to answer customer questions accurately and encourage them to place an order.
+    
+    const systemPrompt = `You are a friendly and helpful customer service assistant for a local sweet shop called LuxmiSweets. Your goal is to answer customer questions accurately and encourage them to place an order.
 
       Here is the current menu:
       ${menu}
@@ -81,10 +85,22 @@ const chatFlow = ai.defineFlow(
       - When asked about the menu, use the provided list.
       - Always be polite and helpful.
       - Do not make up information, prices, or items not on the menu.
-      `,
-      history: history,
+      `;
+
+    // Map the 'bot' role to 'model' for the Genkit history
+    const messages: ChatMessage[] = history.map(msg => ({
+        role: msg.role === 'bot' ? 'model' : 'user',
+        content: [{ text: msg.content }]
+    }));
+
+    // Generate the chat response using the Gemini model
+    const response = await ai.generate({
+      model: 'googleai/gemini-2.0-flash',
+      messages: [
+        { role: 'system', content: [{ text: systemPrompt }] },
+        ...messages
+      ],
       config: {
-        // Lower temperature for more factual, less creative responses
         temperature: 0.3,
       },
     });

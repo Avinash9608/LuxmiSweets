@@ -3,18 +3,18 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, Send, X, Loader2, Bot } from "lucide-react";
+import { MessageCircle, Send, X, Loader2, Bot, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { chat, ChatMessage } from "@/ai/flows/chat-flow";
+import { chat, ChatHistory } from "@/ai/flows/chat-flow";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 
 export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
+  const [messages, setMessages] = useState<ChatHistory>([
     { role: 'bot', content: "Hello! I'm the LuxmiSweets assistant. How can I help you today? You can ask me about our menu, hours, or how to place an order." }
   ]);
   const [input, setInput] = useState("");
@@ -25,7 +25,6 @@ export function Chatbot() {
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-        // A slight delay to allow the new message to render
         setTimeout(() => {
             const viewport = scrollAreaRef.current?.querySelector('[data-radix-scroll-area-viewport]');
             if (viewport) {
@@ -39,7 +38,7 @@ export function Chatbot() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage: ChatMessage = { role: 'user', content: input };
+    const userMessage: {role: 'user', content: string} = { role: 'user', content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
@@ -68,11 +67,24 @@ export function Chatbot() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="w-[calc(100vw-2rem)] max-w-sm"
             >
-              <Card className="h-[70vh] flex flex-col shadow-2xl">
-                <CardHeader className="flex flex-row items-center justify-between border-b">
-                  <div className="flex items-center gap-2">
-                    <Bot className="h-6 w-6 text-primary" />
-                    <CardTitle className="font-headline text-lg">LuxmiSweets Assistant</CardTitle>
+              <Card className="h-[70vh] flex flex-col shadow-2xl bg-secondary/30 backdrop-blur-lg">
+                <CardHeader className="flex flex-row items-center justify-between border-b bg-background/80">
+                  <div className="flex items-center gap-3">
+                     <Avatar className="h-9 w-9 border-2 border-primary/50">
+                      <div className="bg-primary h-full w-full flex items-center justify-center">
+                        <Bot className="h-5 w-5 text-primary-foreground" />
+                      </div>
+                    </Avatar>
+                    <div>
+                      <CardTitle className="font-headline text-lg text-foreground">LuxmiSweets Assistant</CardTitle>
+                      <p className="text-xs text-primary flex items-center gap-1.5">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        Online
+                      </p>
+                    </div>
                   </div>
                    <Button variant="ghost" size="icon" onClick={toggleOpen} className="h-8 w-8">
                     <X className="h-4 w-4" />
@@ -80,52 +92,64 @@ export function Chatbot() {
                 </CardHeader>
                 <CardContent className="flex-1 p-0">
                   <ScrollArea className="h-full" ref={scrollAreaRef}>
-                    <div className="p-4 space-y-4">
+                    <div className="p-4 space-y-6">
                       {messages.map((message, index) => (
                         <div
                           key={index}
                           className={cn(
-                            "flex items-start gap-3",
+                            "flex items-end gap-2.5",
                             message.role === "user" ? "justify-end" : "justify-start"
                           )}
                         >
                           {message.role === "bot" && (
-                            <Avatar className="h-8 w-8 bg-primary text-primary-foreground flex items-center justify-center">
-                              <Bot className="h-5 w-5" />
+                            <Avatar className="h-8 w-8 flex-shrink-0">
+                               <div className="bg-primary h-full w-full flex items-center justify-center">
+                                <Bot className="h-4 w-4 text-primary-foreground" />
+                              </div>
                             </Avatar>
                           )}
-                          <div
+                          <motion.div
+                             initial={{ opacity: 0, y: 10 }}
+                             animate={{ opacity: 1, y: 0 }}
+                             transition={{ duration: 0.3, delay: 0.1 * index }}
                             className={cn(
-                              "max-w-[80%] rounded-lg px-4 py-2 text-sm",
+                              "max-w-[80%] rounded-lg px-3.5 py-2.5 text-sm shadow-md",
                               message.role === "user"
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-secondary"
+                                ? "bg-primary text-primary-foreground rounded-br-none"
+                                : "bg-background text-foreground rounded-bl-none"
                             )}
                           >
-                            {message.content}
-                          </div>
+                            <p className="whitespace-pre-wrap">{message.content}</p>
+                          </motion.div>
                            {message.role === 'user' && (
-                                <Avatar className="h-8 w-8">
-                                    <AvatarFallback>U</AvatarFallback>
+                                <Avatar className="h-8 w-8 flex-shrink-0">
+                                    <div className="bg-muted h-full w-full flex items-center justify-center">
+                                        <User className="h-4 w-4 text-muted-foreground" />
+                                    </div>
                                 </Avatar>
                             )}
                         </div>
                       ))}
                       {isLoading && (
-                        <div className="flex items-start gap-3 justify-start">
-                           <Avatar className="h-8 w-8 bg-primary text-primary-foreground flex items-center justify-center">
-                              <Bot className="h-5 w-5" />
+                        <div className="flex items-end gap-2.5 justify-start">
+                           <Avatar className="h-8 w-8 flex-shrink-0">
+                               <div className="bg-primary h-full w-full flex items-center justify-center">
+                                <Bot className="h-4 w-4 text-primary-foreground" />
+                              </div>
                             </Avatar>
-                          <div className="bg-secondary px-4 py-2 rounded-lg flex items-center gap-2">
-                             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                             <span className="text-sm text-muted-foreground">Thinking...</span>
+                          <div className="bg-background px-4 py-2 rounded-lg flex items-center gap-2 rounded-bl-none shadow-md">
+                             <div className="flex items-center gap-1.5">
+                               <span className="h-1.5 w-1.5 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.3s]"></span>
+                               <span className="h-1.5 w-1.5 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.15s]"></span>
+                               <span className="h-1.5 w-1.5 bg-muted-foreground rounded-full animate-pulse"></span>
+                             </div>
                           </div>
                         </div>
                       )}
                     </div>
                   </ScrollArea>
                 </CardContent>
-                <CardFooter className="border-t pt-4">
+                <CardFooter className="border-t bg-background/80 pt-4">
                   <form onSubmit={handleSubmit} className="flex w-full items-center gap-2">
                     <Input
                       value={input}
