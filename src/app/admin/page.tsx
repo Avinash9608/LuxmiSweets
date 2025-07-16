@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -221,8 +220,8 @@ export default function AdminPage() {
     setEditingItem(item);
     form.reset({
         ...item,
-        image: null, // Don't pre-fill file input
-    });
+ image: undefined, // Explicitly set image to undefined for form reset
+    } as MenuItemForm); // Cast to MenuItemForm to ensure type compatibility
     setIsDialogOpen(true);
   };
 
