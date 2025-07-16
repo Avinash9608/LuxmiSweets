@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -75,7 +76,7 @@ export function TeamSection() {
               className="flex flex-col items-center space-y-3"
               variants={itemVariants}
             >
-              <div className="relative w-32 h-32 md:w-40 md:h-40">
+              <div className="relative w-36 h-36">
                 <Image
                   src={member.image}
                   alt={member.name}
