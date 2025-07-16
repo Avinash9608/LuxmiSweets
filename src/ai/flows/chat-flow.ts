@@ -63,6 +63,7 @@ const chatFlow = ai.defineFlow(
   async ({ history, menu }) => {
     // Generate the chat response using the Gemini model
     const response = await ai.generate({
+      model: 'googleai/gemini-2.0-flash',
       prompt: `You are a friendly and helpful customer service assistant for a local sweet shop called LuxmiSweets. Your goal is to answer customer questions accurately and encourage them to place an order.
 
       Here is the current menu:
