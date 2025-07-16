@@ -27,7 +27,11 @@ async function streamToBuffer(readableStream: ReadableStream<Uint8Array>): Promi
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
   try {
-    await connectDB();
+    const conn = await connectDB();
+    if (!conn) {
+        return NextResponse.json({ message: "Database not configured." }, { status: 500 });
+    }
+
     const formData = await req.formData();
     const imageFile = formData.get('image') as File | null;
 
@@ -89,7 +93,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
   try {
-    await connectDB();
+    const conn = await connectDB();
+    if (!conn) {
+        return NextResponse.json({ message: "Database not configured." }, { status: 500 });
+    }
     const deletedItem = await MenuItem.findByIdAndDelete(id);
 
     if (!deletedItem) {

@@ -119,16 +119,20 @@ export default function AdminPage() {
         const data = await res.json();
         setMenuItems(data);
       } else {
+         const errorData = await res.json();
         toast({
           variant: 'destructive',
           title: 'Failed to fetch menu items',
+          description: errorData.message || 'The server returned an error.',
         });
+        setMenuItems([]); // Clear items on error
       }
     } catch (error) {
       toast({
         variant: 'destructive',
         title: 'An error occurred while fetching data.',
       });
+      setMenuItems([]); // Clear items on error
     } finally {
       setIsLoading(false);
     }
@@ -297,33 +301,41 @@ export default function AdminPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {menuItems.map((item) => (
-                  <TableRow key={item._id}>
-                    <TableCell>
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={64}
-                        height={64}
-                        className="rounded-md object-cover h-16 w-16"
-                      />
-                    </TableCell>
-                    <TableCell className="font-medium">{item.name}</TableCell>
-                    <TableCell>{item.category}</TableCell>
-                    <TableCell>₹{item.price} {item.priceUnit}</TableCell>
-                    <TableCell>{item.isFeatured ? 'Yes' : 'No'}</TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => openEditDialog(item)}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDelete(item._id!)} className="text-destructive hover:text-destructive">
-                          <Trash className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {menuItems.length > 0 ? (
+                    menuItems.map((item) => (
+                    <TableRow key={item._id}>
+                        <TableCell>
+                        <Image
+                            src={item.image}
+                            alt={item.name}
+                            width={64}
+                            height={64}
+                            className="rounded-md object-cover h-16 w-16"
+                        />
+                        </TableCell>
+                        <TableCell className="font-medium">{item.name}</TableCell>
+                        <TableCell>{item.category}</TableCell>
+                        <TableCell>₹{item.price} {item.priceUnit}</TableCell>
+                        <TableCell>{item.isFeatured ? 'Yes' : 'No'}</TableCell>
+                        <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                            <Button variant="ghost" size="icon" onClick={() => openEditDialog(item)}>
+                            <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => handleDelete(item._id!)} className="text-destructive hover:text-destructive">
+                            <Trash className="h-4 w-4" />
+                            </Button>
+                        </div>
+                        </TableCell>
+                    </TableRow>
+                    ))
+                ) : (
+                    <TableRow>
+                        <TableCell colSpan={6} className="text-center text-muted-foreground h-24">
+                            No menu items found. Try seeding initial data.
+                        </TableCell>
+                    </TableRow>
+                )}
               </TableBody>
             </Table>
           </div>

@@ -24,7 +24,10 @@ async function streamToBuffer(readableStream: ReadableStream<Uint8Array>): Promi
 // GET all menu items
 export async function GET() {
   try {
-    await connectDB();
+    const conn = await connectDB();
+    if (!conn) {
+        return NextResponse.json({ message: "Database not configured." }, { status: 500 });
+    }
     const menuItems = await MenuItem.find({}).sort({ category: 1, name: 1 });
     return NextResponse.json(menuItems);
   } catch (error) {
@@ -36,7 +39,11 @@ export async function GET() {
 // POST a new menu item
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
+    const conn = await connectDB();
+    if (!conn) {
+        return NextResponse.json({ message: "Database not configured." }, { status: 500 });
+    }
+
     const formData = await req.formData();
     const imageFile = formData.get('image') as File | null;
     

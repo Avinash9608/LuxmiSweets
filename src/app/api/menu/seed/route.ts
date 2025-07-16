@@ -6,7 +6,10 @@ import { menuSeedData } from '@/lib/menu-seed-data';
 
 export async function POST(req: NextRequest) {
     try {
-        await connectDB();
+        const conn = await connectDB();
+        if (!conn) {
+             return NextResponse.json({ message: "Database connection is not configured." }, { status: 500 });
+        }
 
         // Check if data already exists to avoid duplication
         const count = await MenuItem.countDocuments();

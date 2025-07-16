@@ -3,8 +3,16 @@ import mongoose from 'mongoose';
 
 const ATLAS_URI = process.env.ATLAS_URI;
 
+// Gracefully handle missing ATLAS_URI
 if (!ATLAS_URI) {
-  throw new Error('Please define the ATLAS_URI environment variable inside .env.local');
+  console.warn(
+    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
+    "!!! ATLAS_URI environment variable is not defined. !!!\n" +
+    "!!! The application will run without database      !!!\n" +
+    "!!! functionality. Please create a .env.local file !!!\n" +
+    "!!! and add your MongoDB connection string.        !!!\n" +
+    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  );
 }
 
 let cached = global.mongoose;
@@ -14,6 +22,11 @@ if (!cached) {
 }
 
 export async function connectDB() {
+  // If URI is not provided, don't attempt to connect
+  if (!ATLAS_URI) {
+    return null;
+  }
+  
   if (cached.conn) {
     return cached.conn;
   }
