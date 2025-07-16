@@ -76,14 +76,13 @@ export function TeamSection() {
               className="flex flex-col items-center space-y-3"
               variants={itemVariants}
             >
-              <div className="relative w-36 h-36">
+              <div className="relative w-36 h-36 rounded-full overflow-hidden shadow-lg border-4 border-white dark:border-secondary transition-transform duration-300 hover:scale-105">
                 <Image
                   src={member.image}
                   alt={member.name}
-                  width={144}
-                  height={144}
+                  fill
                   data-ai-hint={member.hint}
-                  className="rounded-full object-cover shadow-lg border-4 border-white dark:border-secondary transition-transform duration-300 hover:scale-105"
+                  className="object-cover"
                 />
               </div>
               <div className="mt-2">
