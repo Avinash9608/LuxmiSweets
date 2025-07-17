@@ -24,8 +24,8 @@ async function streamToBuffer(readableStream: ReadableStream<Uint8Array>): Promi
 
 
 // PUT (update) a menu item
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function PUT(req: NextRequest, context: any) {
+  const { id } = context.params;
   try {
     const conn = await connectDB();
     if (!conn) {
@@ -90,8 +90,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 // DELETE a menu item
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function DELETE(req: NextRequest, context: any) {
+  const { id } = context.params;
   try {
     const conn = await connectDB();
     if (!conn) {

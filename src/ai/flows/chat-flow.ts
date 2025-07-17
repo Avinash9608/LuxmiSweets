@@ -72,18 +72,20 @@ export const chatFlow = ai.defineFlow(
       `;
 
     // Map the 'bot' role to 'model' for the Genkit history
-    const messages: ChatMessage[] = history.map(msg => ({
+    let messages: ChatMessage[] = history.map(msg => ({
         role: msg.role === 'bot' ? 'model' : 'user',
         content: [{ text: msg.content }]
     }));
 
+    // Ensure the first message is from the user
+    while (messages.length > 0 && messages[0].role !== 'user') {
+      messages.shift();
+    }
+
     // Generate the chat response using the Gemini model
     const response = await ai.generate({
       model: 'googleai/gemini-2.0-flash',
-      messages: [
-        { role: 'system', content: [{ text: systemPrompt }] },
-        ...messages
-      ],
+      messages: messages,
       config: {
         temperature: 0.3,
       },

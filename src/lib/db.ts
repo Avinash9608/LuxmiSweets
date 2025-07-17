@@ -15,7 +15,7 @@ if (!ATLAS_URI) {
     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
     "!!! ATLAS_URI environment variable is not defined. !!!\n" +
     "!!! The application will run without database      !!!\n" +
-    "!!! functionality. Please create a .env.local file !!!\n" +
+    "!!! functionality. Please create a .env file !!!\n" +
     "!!! and add your MongoDB connection string.        !!!\n" +
     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   );

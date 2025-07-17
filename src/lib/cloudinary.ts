@@ -10,7 +10,7 @@ const cloudinaryConfig = {
 };
 
 if (!cloudinaryConfig.cloud_name || !cloudinaryConfig.api_key || !cloudinaryConfig.api_secret) {
-    console.error("Cloudinary configuration is missing. Make sure CLOUDINARY_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set in your .env.local file.");
+    console.error("Cloudinary configuration is missing. Make sure CLOUDINARY_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set in your .env file.");
 } else {
     cloudinary.config(cloudinaryConfig);
 }

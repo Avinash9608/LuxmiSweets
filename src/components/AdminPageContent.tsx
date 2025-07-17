@@ -283,7 +283,7 @@ export default function AdminPageContent() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <p className="text-sm text-muted-foreground">You can get a free database from MongoDB Atlas. Once you have your connection string (URI), add it to a <code className="bg-muted px-1 py-0.5 rounded-sm">.env.local</code> file in your project as <code className="bg-muted px-1 py-0.5 rounded-sm">ATLAS_URI</code>.</p>
+                <p className="text-sm text-muted-foreground">You can get a free database from MongoDB Atlas. Once you have your connection string (URI), add it to a <code className="bg-muted px-1 py-0.5 rounded-sm">.env</code> file in your project as <code className="bg-muted px-1 py-0.5 rounded-sm">ATLAS_URI</code>.</p>
                 <Button asChild className="mt-4">
                     <a href="https://www.mongodb.com/atlas/database" target="_blank" rel="noopener noreferrer">
                         Get MongoDB Atlas <ExternalLink className="ml-2 h-4 w-4"/>
